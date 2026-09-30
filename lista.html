@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC0004 · Lista de exercícios</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail"></aside>
+  <main class="main">
+  <div class="wrap">
+
+    <header class="page-head">
+      <span class="eyebrow">Lista Parte 1 · 76 questões · 154 itens</span>
+      <h1>Lista de exercícios</h1>
+      <p class="lede">
+        A lista completa dos Profs. George Lima e Rafael Melo, com os enunciados referenciados
+        ao Cormen transcritos do livro. Tente antes de abrir a solução — seu rascunho fica
+        salvo. Depois marque como você foi, para poder filtrar só o que errou.
+      </p>
+      <div class="xs muted" id="resumo"></div>
+    </header>
+
+    <div class="grid g4" id="porSecao" style="margin-bottom:var(--s-6)"></div>
+
+    <div class="filtros">
+      <label class="fld"><span>Seção</span>
+        <select id="fSecao">
+          <option value="todas">Todas</option>
+          <option value="1">1 · Introdução a algoritmos</option>
+          <option value="2">2 · Crescimento de funções</option>
+          <option value="3">3 · Divisão e conquista</option>
+          <option value="4">4 · Projeto de algoritmos</option>
+        </select>
+      </label>
+      <label class="fld"><span>Tema</span><select id="fTema"></select></label>
+      <label class="fld"><span>Dificuldade</span>
+        <select id="fDif">
+          <option value="todas">Qualquer</option>
+          <option value="1">1 · mecânica</option>
+          <option value="2">2 · média</option>
+          <option value="3">3 · difícil</option>
+        </select>
+      </label>
+      <label class="fld"><span>Relevância</span>
+        <select id="fProva">
+          <option value="todas">Qualquer</option>
+          <option value="alta">Alta — cai na prova</option>
+          <option value="media">Média</option>
+          <option value="baixa">Baixa</option>
+        </select>
+      </label>
+      <label class="fld"><span>Status</span>
+        <select id="fStatus">
+          <option value="todos">Todos</option>
+          <option value="pendentes">Ainda não fiz</option>
+          <option value="errei">Errei ou fiz parcial</option>
+          <option value="acertei">Acertei</option>
+        </select>
+      </label>
+      <label class="fld" style="flex:1;min-width:12rem"><span>Buscar no enunciado</span>
+        <input type="search" id="fBusca" placeholder="ex.: teorema mestre, invariante, 64">
+      </label>
+      <button class="btn sm ghost" id="limpar" type="button" style="align-self:flex-end">Limpar</button>
+    </div>
+
+    <p class="xs muted" id="contador" style="margin:var(--s-4) 0 var(--s-3)"></p>
+
+    <div id="itens" class="itens"></div>
+
+  </div>
+  </main>
+</div>
+
+<style>
+.filtros {
+  display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: flex-end;
+  padding: var(--s-4); background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.filtros .fld select { min-width: 9rem; }
+
+.seccard {
+  display: flex; flex-direction: column; gap: var(--s-2); align-items: flex-start;
+  text-align: left; cursor: pointer; font-family: var(--font-ui); color: inherit;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s-4);
+  transition: border-color 0.12s, background 0.12s;
+}
+.seccard:hover { background: var(--surface-2); border-color: var(--line-2); }
+.seccard.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.seccard .nome { font-weight: 650; font-size: var(--t-base); }
+.seccard .desc { line-height: 1.45; }
+.seccard .bar { width: 100%; }
+
+.itens { display: flex; flex-direction: column; gap: var(--s-4); }
+
+.ex {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s-5);
+  display: flex; flex-direction: column; gap: var(--s-4);
+  scroll-margin-top: var(--s-5);
+}
+.ex.feito { border-left: 3px solid var(--line-2); }
+.ex > header { display: flex; flex-direction: column; gap: var(--s-2); }
+.ex .num {
+  font-family: var(--font-mono); font-size: var(--t-md); font-weight: 700;
+  color: var(--accent); min-width: 2.5rem;
+}
+.ex .enun > * { max-width: var(--measure); }
+.ex .enun > * + * { margin-top: var(--s-3); }
+.ex .enun p { margin: 0; }
+.ex .enun .eq { text-align: center; }
+.ex .resp { max-width: 46rem; }
+.ex > footer { padding-top: var(--s-2); border-top: 1px solid var(--line); }
+
+.ex .resumo {
+  background: var(--gold-soft); border: 1px solid var(--gold-line);
+  border-radius: var(--radius-sm); padding: var(--s-3);
+  display: flex; flex-direction: column; gap: var(--s-1);
+}
+.ex .resumo .tag {
+  font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gold);
+}
+.ex .resumo > *:not(.tag) { max-width: var(--measure); }
+
+/* Tabelas e pseudocódigo dentro de enunciados e soluções nunca vazam */
+.ex .tw, .ex .pseudo, .ex .eq { max-width: 100%; }
+.ex ol.steps .pseudo { margin: var(--s-2) 0; }
+</style>
+
+<script src="js/app.js"></script>
+<script src="data/exercicios.js"></script>
+<script src="js/lista.js"></script>
+</body>
+</html>

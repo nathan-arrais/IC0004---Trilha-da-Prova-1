@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC0004 · Simulado</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail"></aside>
+  <main class="main">
+  <div class="wrap">
+
+    <header class="page-head">
+      <span class="eyebrow">Avaliação 01 · 10,0 + 1,0 extra</span>
+      <h1>Simulado</h1>
+      <p class="lede">
+        Três provas no molde da Avaliação 01: a de 2026.1 com gabarito oficial, mais duas
+        autorais com a mesma estrutura e distribuição de pontos. Cronômetro, navegação entre
+        questões e correção com o gabarito ao lado da sua resposta.
+      </p>
+    </header>
+
+    <div id="palco"></div>
+
+  </div>
+  </main>
+</div>
+
+<style>
+/* ---- cartões de escolha ---- */
+.simcard {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s-5);
+  display: flex; flex-direction: column; gap: var(--s-3);
+}
+.simcard.oficial { border-color: var(--accent-line); box-shadow: inset 3px 0 0 var(--accent); }
+.simcard > header { display: flex; flex-direction: column; gap: var(--s-2); }
+.simcard h3 { font-size: var(--t-md); }
+.simcard p { flex: 1; }
+.simcard .specs {
+  display: grid; grid-template-columns: auto 1fr; gap: 0.15rem var(--s-3);
+  margin: 0; font-size: var(--t-sm);
+}
+.simcard .specs dt { color: var(--ink-4); font-size: var(--t-xs); text-transform: uppercase;
+                     letter-spacing: 0.06em; font-weight: 700; align-self: center; }
+.simcard .specs dd { margin: 0; font-variant-numeric: tabular-nums; }
+.simcard .notabox {
+  display: flex; align-items: baseline; gap: var(--s-2);
+  background: var(--ok-soft); border: 1px solid var(--ok); color: var(--ok);
+  border-radius: var(--radius-sm); padding: var(--s-2) var(--s-3);
+}
+.simcard .notabox strong { font-family: var(--font-disp); font-size: var(--t-xl); line-height: 1; }
+
+/* ---- cabeçalho da prova ---- */
+.provahd {
+  display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;
+  padding: var(--s-4); margin-bottom: var(--s-4);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  position: sticky; top: 0; z-index: 5;
+}
+.provahd > div:first-child { flex: 1; min-width: 12rem; }
+.cron {
+  font-family: var(--font-mono); font-size: var(--t-2xl); font-weight: 600;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  padding: 0 var(--s-3); color: var(--ink);
+}
+.cron.alerta { color: var(--warn); }
+.cron.critico { color: var(--bad); }
+.notafinal { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.2; }
+.notafinal strong { font-family: var(--font-disp); font-size: var(--t-2xl); line-height: 1; }
+.notafinal strong.ok { color: var(--ok); }
+.notafinal strong.warn { color: var(--warn); }
+.notafinal strong.bad { color: var(--bad); }
+
+/* ---- navegação entre questões ---- */
+.qnav { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-bottom: var(--s-4); }
+.qbtn {
+  display: flex; flex-direction: column; align-items: center; gap: 0.1rem;
+  cursor: pointer; font-family: var(--font-ui); min-width: 4rem;
+  background: var(--surface); border: 1px solid var(--line-2); color: var(--ink-3);
+  border-radius: var(--radius-sm); padding: var(--s-2) var(--s-3);
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+.qbtn:hover { background: var(--surface-2); color: var(--ink); }
+.qbtn .n { font-weight: 700; font-size: var(--t-base); }
+.qbtn .p { font-size: var(--t-xs); font-variant-numeric: tabular-nums; }
+.qbtn.feita { border-color: var(--ok); color: var(--ok); background: var(--ok-soft); }
+.qbtn.on { border-color: var(--accent); color: var(--accent-ink); background: var(--accent); }
+.qbtn.on .p { color: var(--accent-ink); opacity: 0.85; }
+
+/* ---- questão ---- */
+.qcard {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-4);
+}
+.qn { font-family: var(--font-disp); font-size: var(--t-lg); font-weight: 650; }
+.qcard .enun > * + * { margin-top: var(--s-3); }
+.qcard .enun p { margin: 0; max-width: var(--measure); }
+.qcard .enun .eq { text-align: center; }
+
+/* ---- correção ---- */
+.corr { display: flex; flex-direction: column; gap: var(--s-5); margin-top: var(--s-4); }
+.qcorr {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--s-5); display: flex; flex-direction: column; gap: var(--s-3);
+}
+.qcorr > header { padding-bottom: var(--s-2); border-bottom: 1px solid var(--line); }
+.notaq {
+  font-family: var(--font-mono); font-size: var(--t-md); font-weight: 700;
+  font-variant-numeric: tabular-nums; color: var(--ink);
+}
+.qcorr .minha {
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-left: 3px solid var(--ink-4);
+  border-radius: var(--radius-sm); padding: var(--s-3);
+  display: flex; flex-direction: column; gap: var(--s-2);
+}
+.qcorr .minha .tag {
+  font-size: var(--t-xs); font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.qcorr .minha .txt {
+  font-family: var(--font-mono); font-size: var(--t-sm); line-height: 1.6;
+  white-space: pre-wrap; word-break: break-word; margin: 0;
+  background: transparent; border: 0; padding: 0;
+}
+.qcorr > footer {
+  padding-top: var(--s-3); border-top: 1px solid var(--line);
+  display: flex; flex-direction: column; gap: var(--s-2);
+}
+.notas { display: flex; gap: var(--s-1); flex-wrap: wrap; }
+.notas .btn { min-width: 3rem; justify-content: center; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 700px) {
+  .provahd { position: static; }
+  .cron { font-size: var(--t-xl); }
+}
+</style>
+
+<script src="js/app.js"></script>
+<script src="data/simulados.js"></script>
+<script src="js/simulado.js"></script>
+</body>
+</html>

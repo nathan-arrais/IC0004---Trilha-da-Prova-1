@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC0004 · Teoria</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail"></aside>
+  <main class="main">
+  <div class="wrap">
+
+    <header class="page-head">
+      <span class="eyebrow">Módulos 0 – 3</span>
+      <h1>Teoria</h1>
+      <p class="lede">
+        Do pré-requisito matemático ao projeto de algoritmos. Os módulos 1 a 3 seguem os
+        slides 01, 02 e 03 do Prof. George Lima; o módulo 0 cobre o ferramental que os slides
+        pressupõem. Leia com papel ao lado — recorrência não se fixa lendo.
+      </p>
+    </header>
+
+    <div class="teoria-layout">
+      <nav class="toc" aria-label="Sumário">
+        <span class="toc-hd">Sumário</span>
+        <div id="toc"></div>
+      </nav>
+      <div class="teoria-body" id="conteudo"></div>
+    </div>
+
+  </div>
+  </main>
+</div>
+
+<style>
+.teoria-layout { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: var(--s-6); align-items: start; }
+.toc { position: sticky; top: var(--s-5); font-size: var(--t-sm); display: flex; flex-direction: column; gap: var(--s-1);
+       max-height: calc(100vh - 3rem); overflow-y: auto; padding-right: var(--s-2); }
+.toc-hd { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-4);
+          font-weight: 700; padding-bottom: var(--s-2); }
+.toc .mod { display: block; font-weight: 650; color: var(--ink); text-decoration: none;
+            padding: var(--s-2) 0 var(--s-1); border-top: 1px solid var(--line); margin-top: var(--s-2); }
+.toc .mod:first-of-type { border-top: 0; margin-top: 0; }
+.toc .mod .n { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--accent); margin-right: 0.4em; }
+.toc .sec { display: block; color: var(--ink-3); text-decoration: none; padding: 0.15rem 0 0.15rem var(--s-4);
+            border-left: 2px solid var(--line); line-height: 1.4; }
+.toc .sec:hover { color: var(--ink); border-left-color: var(--line-2); }
+.toc .sec.active { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.toc .done::after { content: " ✓"; color: var(--ok); font-weight: 700; }
+
+.teoria-body { min-width: 0; display: flex; flex-direction: column; gap: var(--s-8); }
+.mod-head { display: flex; flex-direction: column; gap: var(--s-2); padding-bottom: var(--s-4);
+            border-bottom: 2px solid var(--accent); }
+.mod-head .n { font-family: var(--font-mono); font-size: var(--t-xs); letter-spacing: 0.16em;
+               text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.mod-head h2 { font-size: var(--t-2xl); }
+.mod-head .fonte { font-size: var(--t-xs); color: var(--ink-4); }
+.mod-head .resumo { font-size: var(--t-md); color: var(--ink-3); max-width: var(--measure); }
+
+.sec { scroll-margin-top: var(--s-4); }
+.sec-head { display: flex; align-items: center; gap: var(--s-3); margin: var(--s-6) 0 var(--s-4); }
+.sec-head::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.sec-head h3 { font-size: var(--t-lg); flex: none; }
+.sec-body > * + * { margin-top: var(--s-4); }
+.sec-body p, .sec-body ul, .sec-body ol { max-width: var(--measure); }
+.sec-body h4 { margin-top: var(--s-5); font-size: var(--t-md); color: var(--accent); }
+.sec-foot { margin-top: var(--s-4); }
+
+@media (max-width: 1000px) {
+  .teoria-layout { grid-template-columns: minmax(0, 1fr); }
+  .toc { position: static; max-height: none; border: 1px solid var(--line); border-radius: var(--radius);
+         padding: var(--s-4); background: var(--surface); }
+}
+</style>
+
+<script src="js/app.js"></script>
+<script src="data/teoria.js"></script>
+<script>
+(function () {
+  'use strict';
+  var esc = AG.esc, st = AG.load();
+
+  /* ------------------------------------------------------------ Sumário */
+  AG.$('#toc').innerHTML = TEORIA.map(function (mod) {
+    return '<a class="mod" href="#' + mod.id + '"><span class="n">' + esc(mod.num) + '</span>'
+      + esc(mod.titulo) + '</a>'
+      + mod.secoes.map(function (s) {
+          var done = st.teoria[s.id] && st.teoria[s.id].done;
+          return '<a class="sec' + (done ? ' done' : '') + '" href="#' + s.id + '" data-sec="' + s.id + '">'
+            + esc(s.titulo) + '</a>';
+        }).join('');
+  }).join('');
+
+  /* ----------------------------------------------------------- Conteúdo */
+  AG.$('#conteudo').innerHTML = TEORIA.map(function (mod) {
+    return '<section class="mod" id="' + mod.id + '">'
+      + '<header class="mod-head">'
+      +   '<span class="n">Módulo ' + esc(mod.num) + '</span>'
+      +   '<h2>' + esc(mod.titulo) + '</h2>'
+      +   '<span class="fonte">' + esc(mod.fonte) + '</span>'
+      +   '<p class="resumo">' + esc(mod.resumo) + '</p>'
+      + '</header>'
+      + mod.secoes.map(function (s) {
+          var done = st.teoria[s.id] && st.teoria[s.id].done;
+          return '<section class="sec" id="' + s.id + '">'
+            + '<div class="sec-head"><h3>' + esc(s.titulo) + '</h3></div>'
+            + '<div class="sec-body">' + AG.tex(s.html) + '</div>'
+            + '<div class="sec-foot"><label class="chk-sec" data-sec="' + s.id + '">'
+            +   '<input type="checkbox"' + (done ? ' checked' : '') + '> '
+            +   '<span>Marcar “' + esc(s.titulo) + '” como estudado</span>'
+            + '</label></div>'
+            + '</section>';
+        }).join('')
+      + '</section>';
+  }).join('');
+
+  /* ------------------------------------------------- Marcar como estudado */
+  AG.$$('.chk-sec').forEach(function (l) {
+    l.querySelector('input').addEventListener('change', function () {
+      AG.rec('teoria', l.dataset.sec, { done: false }).done = this.checked;
+      AG.save();
+      var link = AG.$('#toc .sec[data-sec="' + l.dataset.sec + '"]');
+      if (link) link.classList.toggle('done', this.checked);
+    });
+  });
+
+  /* ------------------------------------ Destacar a seção visível no sumário */
+  if (typeof IntersectionObserver !== 'function') return;   /* recurso opcional */
+  var links = {};
+  AG.$$('#toc .sec').forEach(function (a) { links[a.dataset.sec] = a; });
+  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      var a = links[e.target.id];
+      if (!a) return;
+      if (e.isIntersecting) {
+        AG.$$('#toc .sec.active').forEach(function (x) { x.classList.remove('active'); });
+        a.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -75% 0px' });
+  AG.$$('.sec[id]').forEach(function (s) { obs.observe(s); });
+})();
+</script>
+
+<style>
+.chk-sec { display: inline-flex; align-items: center; gap: var(--s-2); font-size: var(--t-sm);
+           color: var(--ink-3); cursor: pointer; padding: var(--s-2) var(--s-3);
+           border: 1px dashed var(--line-2); border-radius: var(--radius-sm); }
+.chk-sec:hover { color: var(--ink); background: var(--surface-2); }
+</style>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC0004 · Trilha da Prova 1</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail"></aside>
+  <main class="main">
+  <div class="wrap">
+
+    <header class="page-head">
+      <span class="eyebrow">Prova 1 · Slides 01–03 · Lista 1</span>
+      <h1>O caminho até a nota máxima</h1>
+      <p class="lede">
+        Esta trilha foi derivada da <strong>Prova 1 de 2026.1</strong>, do material do Prof. George Lima
+        e da Lista de Exercícios Parte&nbsp;1. O padrão da prova é estável — e ele revela algo útil:
+        <strong>metade dos pontos é mecânica</strong>, cobrada por procedimentos que se treinam por
+        repetição. Comece por eles.
+      </p>
+    </header>
+
+    <!-- ===================================================== Tese: os 11 pontos -->
+    <section class="card" aria-labelledby="h-dist">
+      <header>
+        <h2 id="h-dist" style="font-size:var(--t-lg)">Onde estão os 11 pontos</h2>
+        <p class="meta">10 pontos + 1 extra, distribuídos por esforço de resolução, não por ordem na prova.</p>
+      </header>
+
+      <div class="ptbar" role="img"
+           aria-label="Distribuição: 5,5 pontos mecânicos, 2,5 pontos de média dificuldade, 3,0 pontos de projeto criativo.">
+        <div class="seg ok"   style="flex:5.5">
+          <span class="v">5,5</span><span class="l">Mecânico</span>
+        </div>
+        <div class="seg warn" style="flex:2.5">
+          <span class="v">2,5</span><span class="l">Técnico</span>
+        </div>
+        <div class="seg bad"  style="flex:3">
+          <span class="v">3,0</span><span class="l">Criativo</span>
+        </div>
+      </div>
+      <div class="ptaxis">
+        <span style="flex:5.5">acumula <strong>5,5</strong></span>
+        <span style="flex:2.5">acumula <strong>8,0</strong></span>
+        <span style="flex:3">acumula <strong>10,0&nbsp;+&nbsp;1,0</strong></span>
+      </div>
+
+      <p class="small muted" style="max-width:var(--measure)">
+        <strong>Mecânico</strong> = invariante de laço, Teorema Mestre nos três casos, leitura de função
+        recursiva. São padrões fechados: quem treinou, acerta. <strong>Criativo</strong> = inventar a
+        decomposição de um problema novo. É onde se perde nota, e é a última coisa a treinar — não a primeira.
+      </p>
+    </section>
+
+    <!-- ========================================================== Seu progresso -->
+    <div class="lvl"><h2>Seu progresso</h2><span class="tick" id="progTick">—</span></div>
+
+    <div class="grid g4" id="stats"></div>
+
+    <!-- ========================================================= Anatomia -->
+    <div class="lvl"><h2>Anatomia da Prova 1</h2><span class="tick">2026.1 · 13/04/2026</span></div>
+
+    <div class="tw">
+      <table>
+        <caption>
+          Extraído da prova do semestre anterior, com gabarito. A coluna <em>retorno</em> pondera
+          pontos ganhos contra o esforço de aprender o tema desde zero.
+        </caption>
+        <thead>
+          <tr>
+            <th>Q</th><th class="num">Pts</th><th>Tema cobrado</th>
+            <th>Dificuldade</th><th>Retorno</th><th>Treinar em</th>
+          </tr>
+        </thead>
+        <tbody id="anat"></tbody>
+      </table>
+    </div>
+
+    <!-- ============================================================ Blocos -->
+    <div class="lvl"><h2>Os três blocos, em ordem</h2><span class="tick">A → B → C</span></div>
+    <p class="small muted" style="max-width:var(--measure);margin-bottom:var(--s-4)">
+      A ordem importa: cada bloco é pré-requisito do seguinte, e cada um tem um teto de nota próprio.
+      Não avance para o C sem ter fechado o A.
+    </p>
+
+    <div class="grid g3" id="blocos"></div>
+
+    <!-- =========================================================== Erros -->
+    <div class="lvl"><h2>Erros que custam ponto</h2><span class="tick">checklist</span></div>
+    <p class="small muted" style="max-width:var(--measure);margin-bottom:var(--s-4)">
+      Cada item abaixo é um erro que aparece em prova mesmo quando o raciocínio está certo.
+      Marque os que você já internalizou.
+    </p>
+    <div class="grid g2" id="erros"></div>
+
+    <!-- ======================================================= Como usar -->
+    <div class="lvl"><h2>Como usar esta plataforma</h2><span class="tick">rotina</span></div>
+    <div class="grid g2">
+      <div class="card">
+        <h3>Uma sessão de estudo</h3>
+        <ol class="steps">
+          <li><div><strong>Flashcards devidos</strong> — 5 a 10 minutos. Abre a sessão aquecendo
+            o que já foi visto, antes de conteúdo novo.</div></li>
+          <li><div><strong>Um tópico de teoria</strong> — leia o módulo e acompanhe as derivações
+            com papel ao lado. Ler sem escrever não fixa recorrência.</div></li>
+          <li><div><strong>Exercícios do mesmo tópico</strong> — tente <em>antes</em> de abrir a
+            solução. A plataforma guarda seu rascunho.</div></li>
+          <li><div><strong>Laboratório</strong> quando a intuição falhar — a árvore de recursão
+            desenhada resolve mais dúvida que reler o slide.</div></li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Na semana da prova</h3>
+        <ol class="steps">
+          <li><div><strong>Simulado 1</strong> (a prova real de 2026.1), cronometrado, sem consulta.
+            Serve de diagnóstico, não de treino.</div></li>
+          <li><div><strong>Revise só o que errou</strong> — use o filtro “errei” na lista e o modo
+            “só os que erro” nos flashcards.</div></li>
+          <li><div><strong>Simulados 2 e 3</strong>, no mesmo molde, para confirmar que o padrão
+            está automatizado.</div></li>
+          <li><div><strong>Releia o checklist de erros</strong> na véspera. É o que mais converte
+            raciocínio certo em ponto cheio.</div></li>
+        </ol>
+      </div>
+    </div>
+
+    <p class="xs muted" style="margin-top:var(--s-7);max-width:var(--measure)">
+      Conteúdo construído a partir dos slides 01–03 do Prof. George Lima, da Lista de Exercícios
+      Parte&nbsp;1 (Profs. George Lima e Rafael Melo) e da Prova 1 de 2026.1 com gabarito.
+      Os slides 04–07 e 09–10 cobrem a Prova 2 e estão fora deste escopo.
+    </p>
+
+  </div>
+  </main>
+</div>
+
+<style>
+/* Barra de pontos — específica desta página */
+.ptbar { display: flex; gap: 3px; height: 4.25rem; margin-top: var(--s-2); }
+.ptbar .seg {
+  display: flex; flex-direction: column; justify-content: center; gap: 0.1rem;
+  padding: 0 var(--s-3); border-radius: var(--radius-sm); min-width: 0;
+  border: 1px solid; overflow: hidden;
+}
+.ptbar .seg .v {
+  font-family: var(--font-disp); font-size: var(--t-xl); font-weight: 650;
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.ptbar .seg .l {
+  font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.09em;
+  font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ptbar .ok   { background: var(--ok-soft);   border-color: var(--ok);   color: var(--ok); }
+.ptbar .warn { background: var(--warn-soft); border-color: var(--warn); color: var(--warn); }
+.ptbar .bad  { background: var(--bad-soft);  border-color: var(--bad);  color: var(--bad); }
+.ptaxis { display: flex; gap: 3px; margin-top: var(--s-1); }
+.ptaxis span {
+  padding: 0 var(--s-3); font-size: var(--t-xs); color: var(--ink-3);
+  border-top: 1px solid var(--line); padding-top: var(--s-1); min-width: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+@media (max-width: 620px) {
+  .ptbar { height: auto; flex-direction: column; }
+  .ptbar .seg { flex: none !important; flex-direction: row; align-items: baseline; gap: var(--s-2); padding: var(--s-2) var(--s-3); }
+  .ptaxis { display: none; }
+}
+
+/* Cartão de bloco */
+.bloco { position: relative; }
+.bloco .cap {
+  display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-2);
+  padding-bottom: var(--s-2); border-bottom: 1px solid var(--line);
+}
+.bloco .letra {
+  font-family: var(--font-disp); font-size: var(--t-2xl); font-weight: 650;
+  line-height: 1; letter-spacing: -0.02em;
+}
+.bloco .teto {
+  font-family: var(--font-mono); font-size: var(--t-sm); font-variant-numeric: tabular-nums;
+  color: var(--ink-3); text-align: right;
+}
+.bloco .teto b { display: block; font-size: var(--t-md); color: var(--ink); }
+.bloco ul { padding-left: 1.1em; font-size: var(--t-sm); }
+.bloco.a .letra { color: var(--ok); }
+.bloco.b .letra { color: var(--warn); }
+.bloco.c .letra { color: var(--bad); }
+
+/* Checklist de erros */
+.chk { display: flex; gap: var(--s-3); align-items: flex-start; padding: var(--s-3) var(--s-4);
+       border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); cursor: pointer; }
+.chk:hover { background: var(--surface-2); }
+.chk input { margin-top: 0.3rem; flex: none; }
+.chk .txt { font-size: var(--t-sm); min-width: 0; }
+.chk .txt b { display: block; margin-bottom: 0.1rem; }
+.chk.done { opacity: 0.55; }
+.chk.done .txt b { text-decoration: line-through; }
+</style>
+
+<script src="js/app.js"></script>
+<script src="data/flashcards.js"></script>
+<script src="data/exercicios.js"></script>
+<script src="data/simulados.js"></script>
+<script>
+(function () {
+  'use strict';
+  var m = AG.m, esc = AG.esc;
+
+  /* ------------------------------------------------ Anatomia da prova */
+  var ANAT = [
+    { q: '1', pts: '2,0', tema: 'Resolver 4 recorrências — Teorema Mestre nos casos 1, 2 e 3, e '
+        + m('T(n) = 2T(n−1) + n') + ' pela árvore de recursão',
+      d: 2, ret: 'Altíssimo', obs: '3 dos 4 itens são receita fechada',
+      link: 'estudar.html#m2', linkTxt: 'Módulo 2' },
+    { q: '2', pts: '2,0', tema: 'Complexidade de laços aninhados — montar e resolver o somatório ('
+        + m('Θ(n² log n)') + ')',
+      d: 2, ret: 'Alto', obs: 'depende de somatórios do Módulo 0',
+      link: 'estudar.html#m0-somas', linkTxt: 'Somatórios' },
+    { q: '3', pts: '2,0', tema: 'Invariante de laço com inicialização, manutenção e término',
+      d: 1, ret: 'Altíssimo', obs: 'é um template de 3 parágrafos',
+      link: 'estudar.html#m1-inv', linkTxt: 'Invariantes' },
+    { q: '4', pts: '2,0', tema: 'Ler uma função recursiva de divisão e conquista: dizer o que ela '
+        + 'retorna e extrair a recorrência',
+      d: 1, ret: 'Alto', obs: 'leitura de código, não invenção',
+      link: 'estudar.html#m3', linkTxt: 'Módulo 3' },
+    { q: '5', pts: '2,0', tema: 'Projetar um algoritmo de divisão e conquista (vetor unimodal → '
+        + m('Θ(log n)') + ')',
+      d: 3, ret: 'Médio', obs: 'exige inventar a decomposição',
+      link: 'lista.html?tag=projeto', linkTxt: 'Projeto D&C' },
+    { q: '6', pts: '1,0', tema: 'D&C com retorno enriquecido — maior diferença '
+        + m('A[j] − A[i]') + ' em ' + m('Θ(n)'),
+      d: 3, ret: 'Extra', obs: 'ponto extra: só depois de fechar o resto',
+      link: 'lista.html?tag=projeto', linkTxt: 'Projeto D&C' }
+  ];
+
+  AG.$('#anat').innerHTML = ANAT.map(function (r) {
+    var rp = r.ret === 'Altíssimo' ? 'ok' : r.ret === 'Alto' ? 'accent'
+           : r.ret === 'Médio' ? 'warn' : 'plain';
+    return '<tr>'
+      + '<td class="num"><strong>' + r.q + '</strong></td>'
+      + '<td class="num">' + r.pts + '</td>'
+      + '<td>' + r.tema + '<br><span class="xs muted">' + esc(r.obs) + '</span></td>'
+      + '<td>' + AG.diff(r.d) + '</td>'
+      + '<td><span class="pill ' + rp + '">' + esc(r.ret) + '</span></td>'
+      + '<td><a href="' + r.link + '">' + esc(r.linkTxt) + '</a></td>'
+      + '</tr>';
+  }).join('');
+
+  /* ------------------------------------------------------------ Blocos */
+  var BLOCOS = [
+    { cls: 'a', letra: 'A', nome: 'Travar o mecânico', teto: '5,5', de: '0,0',
+      qs: 'Q3 · Q1a,b,c · Q4',
+      resumo: 'Procedimentos fechados. Se você só fizer este bloco e fizer bem, já sai da prova aprovado.',
+      itens: [
+        'O template de invariante de laço — as três propriedades, sempre nesta ordem',
+        'Teorema Mestre: identificar <span class="m">a</span>, <span class="m">b</span>, <span class="m">f(n)</span>, comparar com <span class="m">n<sup>log<sub>b</sub> a</sup></span> e decidir o caso',
+        'A condição de regularidade do caso 3 (e por que ela existe)',
+        'Ler uma recursiva e contar: quantas chamadas, de que tamanho, com que custo local'
+      ],
+      links: [['estudar.html#m1-inv', 'Invariantes'], ['estudar.html#m2-mestre', 'Teorema Mestre'],
+              ['flashcards.html?deck=D2', 'Flashcards D2']] },
+    { cls: 'b', letra: 'B', nome: 'Somar e desenhar', teto: '8,0', de: '5,5',
+      qs: 'Q2 · Q1d',
+      resumo: 'Onde o Teorema Mestre não alcança. Exige domínio de somatórios e da árvore de recursão.',
+      itens: [
+        'Somatórios: aritmético, geométrico (finito e infinito) e harmônico',
+        'Traduzir laços aninhados em somatório e resolver de dentro para fora',
+        'Árvore de recursão: altura, custo por nível, número de folhas',
+        'Recorrências subtrativas — <span class="m">T(n−1)</span>, <span class="m">2T(n−1)</span> — que o Teorema Mestre não resolve',
+        'Remoção de histórico, para recorrências com somatório'
+      ],
+      links: [['estudar.html#m0-somas', 'Somatórios'], ['estudar.html#m2-arvore', 'Árvore de recursão'],
+              ['labs.html#lab-arvore', 'Lab: árvore']] },
+    { cls: 'c', letra: 'C', nome: 'Projetar do zero', teto: '10,0 + 1,0', de: '8,0',
+      qs: 'Q5 · Q6',
+      resumo: 'Não tem receita. O que existe é um repertório de decomposições — e ele se constrói resolvendo problemas.',
+      itens: [
+        'Descartar metade com informação local (unimodal, <span class="m">X[i] = i</span>, busca binária modificada)',
+        'Retorno enriquecido: devolver mais que a resposta para combinar em <span class="m">Θ(1)</span>',
+        'Reduzir o número de subproblemas (Strassen, Karatsuba)',
+        'Elemento majoritário e par de pontos mais próximos',
+        'Reconhecer, no enunciado, qual dessas formas se aplica'
+      ],
+      links: [['lista.html?tag=projeto', 'Exercícios de projeto'], ['estudar.html#m3', 'Módulo 3'],
+              ['simulado.html', 'Simulados']] }
+  ];
+
+  AG.$('#blocos').innerHTML = BLOCOS.map(function (b) {
+    return '<section class="card bloco ' + b.cls + '">'
+      + '<div class="cap"><div>'
+      +   '<span class="letra">' + b.letra + '</span>'
+      +   '<h3 style="margin-top:.15rem">' + esc(b.nome) + '</h3>'
+      +   '<span class="xs muted mono">' + b.qs + '</span>'
+      + '</div><div class="teto"><b>' + b.teto + '</b>teto de nota<br>partindo de ' + b.de + '</div></div>'
+      + '<p class="small">' + esc(b.resumo) + '</p>'
+      + '<ul>' + b.itens.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>'
+      + '<div class="row tight">' + b.links.map(function (l) {
+          return '<a class="btn sm" href="' + l[0] + '">' + esc(l[1]) + '</a>';
+        }).join('') + '</div>'
+      + '</section>';
+  }).join('');
+
+  /* ------------------------------------------------------------- Erros */
+  var ERROS = [
+    ['Responder em O quando a prova pede Θ',
+     'O enunciado de 2026.1 abre dizendo: “limites assintóticos devem ser fornecidos em notação Θ”. '
+     + 'Dar ' + m('O(n log n)') + ' onde cabia ' + m('Θ(n log n)') + ' é resposta incompleta.'],
+    ['Aplicar o Teorema Mestre onde ele não vale',
+     'Recorrências subtrativas (' + m('T(n−1)') + ') e casos em que ' + m('f(n)') + ' não é '
+     + 'polinomialmente comparável a ' + m('n<sup>log<sub>b</sub> a</sup>') + ' — como '
+     + m('2T(n/2) + n log n') + ' — precisam de árvore de recursão.'],
+    ['Esquecer a condição de regularidade no caso 3',
+     'O caso 3 tem duas exigências: ' + m('f(n) = Ω(n<sup>log<sub>b</sub> a + ε</sup>)') + ' <em>e</em> '
+     + m('a·f(n/b) ≤ c·f(n)') + ' com ' + m('c < 1') + '. O gabarito de 2026.1 verifica explicitamente a segunda.'],
+    ['Enunciar o invariante sem as três propriedades',
+     'Inicialização, manutenção e término. Faltando o término, não se demonstrou a corretude — '
+     + 'só que a propriedade se mantém. É ele que fecha a prova.'],
+    ['Dar a complexidade sem mostrar a recorrência',
+     'Nas questões 4, 5 e 6 o enunciado pede explicitamente a equação de recorrência. '
+     + 'A complexidade certa sem a recorrência perde parte dos pontos.'],
+    ['Somar os laços em vez de multiplicar (e vice-versa)',
+     'Laços aninhados multiplicam; laços em sequência somam e o maior domina. '
+     + 'Na Q2 o laço interno é ' + m('Θ(log<sub>3</sub> n)') + ' <em>independente</em> de '
+     + m('i') + ' e ' + m('j') + ' — reconhecer isso é o que destrava o somatório.'],
+    ['Confundir o caso médio com o melhor caso',
+     'Quick-sort e k-ésimo menor são ' + m('Θ(n²)') + ' no pior caso. O '
+     + m('Θ(n log n)') + ' famoso é o caso <em>médio</em>, e vem de uma análise probabilística '
+     + 'com remoção de histórico.'],
+    ['Perder o ponto extra por falta de tempo',
+     'A Q6 vale 1,0 e é curta para quem reconhece o padrão “retorno enriquecido”. '
+     + 'Deixe-a para o fim, mas reserve tempo — é nota acima de 10.']
+  ];
+
+  var st = AG.load();
+  AG.$('#erros').innerHTML = ERROS.map(function (e, i) {
+    var id = 'erro' + i;
+    var done = st.teoria[id] && st.teoria[id].done;
+    return '<label class="chk' + (done ? ' done' : '') + '" data-id="' + id + '">'
+      + '<input type="checkbox"' + (done ? ' checked' : '') + '>'
+      + '<span class="txt"><b>' + esc(e[0]) + '</b><span class="muted">' + e[1] + '</span></span>'
+      + '</label>';
+  }).join('');
+
+  AG.$$('#erros .chk').forEach(function (l) {
+    l.querySelector('input').addEventListener('change', function () {
+      AG.rec('teoria', l.dataset.id, { done: false }).done = this.checked;
+      l.classList.toggle('done', this.checked);
+      AG.save();
+    });
+  });
+
+  /* --------------------------------------------------------- Progresso */
+  function stats() {
+    var c = AG.cardStats(), x = AG.exStats(), s = AG.simStats();
+    var xProva = AG.exStats(function (e) { return e.p === 'alta'; });
+
+    var cards = [
+      { k: 'Flashcards dominados', v: c.dominados + '<span class="muted" style="font-size:var(--t-base)">/' + c.total + '</span>',
+        n: c.devidos + ' para revisar hoje', p: AG.pct(c.dominados, c.total), cls: 'ok',
+        href: 'flashcards.html' },
+      { k: 'Exercícios resolvidos', v: x.feitos + '<span class="muted" style="font-size:var(--t-base)">/' + x.total + '</span>',
+        n: x.ok + ' acertos · ' + x.partial + ' parciais · ' + x.bad + ' erros',
+        p: AG.pct(x.feitos, x.total), cls: 'accent', href: 'lista.html' },
+      { k: 'Prioritários para a prova', v: xProva.feitos + '<span class="muted" style="font-size:var(--t-base)">/' + xProva.total + '</span>',
+        n: 'questões que mapeiam direto no padrão', p: AG.pct(xProva.feitos, xProva.total),
+        cls: 'warn', href: 'lista.html?prova=alta' },
+      { k: 'Melhor simulado', v: s.melhor === null ? '—' : String(s.melhor).replace('.', ',') + '<span class="muted" style="font-size:var(--t-base)">/11</span>',
+        n: s.feitos + ' de ' + s.total + ' simulados feitos',
+        p: s.melhor === null ? 0 : AG.pct(s.melhor, 11), cls: 'bad', href: 'simulado.html' }
+    ];
+
+    AG.$('#stats').innerHTML = cards.map(function (c2) {
+      return '<a class="card pad-sm" href="' + c2.href + '" style="text-decoration:none;color:inherit;gap:var(--s-2)">'
+        + '<div class="stat"><span class="k">' + esc(c2.k) + '</span>'
+        + '<span class="v">' + c2.v + '</span>'
+        + '<span class="n">' + esc(c2.n) + '</span></div>'
+        + '<div class="bar"><i class="' + (c2.cls === 'accent' ? '' : c2.cls) + '" style="width:' + c2.p + '%"></i></div>'
+        + '</a>';
+    }).join('');
+
+    var totalItens = c.total + x.total;
+    var feitos = c.dominados + x.feitos;
+    AG.$('#progTick').textContent = AG.pct(feitos, totalItens) + '% do material percorrido';
+  }
+
+  stats();
+})();
+</script>
+</body>
+</html>

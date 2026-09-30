@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC0004 · Laboratório</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail"></aside>
+  <main class="main">
+  <div class="wrap">
+
+    <header class="page-head">
+      <span class="eyebrow">Quatro ferramentas interativas</span>
+      <h1>Laboratório</h1>
+      <p class="lede">
+        Para quando a intuição falhar. A árvore desenhada resolve mais dúvida sobre o Teorema
+        Mestre do que reler o slide, e o trace passo a passo mostra por que
+        <code>particiona</code> é linear.
+      </p>
+    </header>
+
+    <!-- =============================================== 1. Árvore de recursão -->
+    <section id="lab-arvore" class="lab">
+      <div class="lvl"><h2>Árvore de recursão</h2><span class="tick">lab 1</span></div>
+      <p class="small muted" style="max-width:var(--measure)">
+        Monte uma recorrência da forma <span class="m">T(n) = aT(n/b) + f(n)</span> e veja a
+        árvore, as quatro medidas que importam e a razão da série geométrica — que é o que
+        decide qual caso do Teorema Mestre se aplica.
+      </p>
+
+      <div class="controles">
+        <label class="fld"><span>a — nº de subproblemas</span>
+          <input type="number" id="arvA" value="2" min="1" max="16" step="1"></label>
+        <label class="fld"><span>b — divisor do tamanho</span>
+          <input type="number" id="arvB" value="2" min="2" max="8" step="1"></label>
+        <label class="fld"><span>f(n) — custo local</span>
+          <select id="arvF"></select></label>
+        <label class="fld"><span>n (só para a ilustração)</span>
+          <input type="number" id="arvN" value="64" min="8" max="4096" step="8"></label>
+      </div>
+
+      <div class="row tight" id="presets" style="margin-top:var(--s-3)">
+        <span class="xs muted" style="text-transform:uppercase;letter-spacing:.08em;font-weight:700">Exemplos do curso</span>
+        <button class="btn sm" data-pre="2|2|n" type="button">Merge Sort</button>
+        <button class="btn sm" data-pre="1|2|1" type="button">Busca binária</button>
+        <button class="btn sm" data-pre="2|2|1" type="button">Q4 da prova</button>
+        <button class="btn sm" data-pre="4|2|n2" type="button">Q1a da prova</button>
+        <button class="btn sm" data-pre="3|4|nlogn" type="button">Q1b da prova</button>
+        <button class="btn sm" data-pre="7|2|n2" type="button">Strassen</button>
+        <button class="btn sm" data-pre="3|4|n2" type="button">Slide 02</button>
+        <button class="btn sm" data-pre="2|2|nlogn" type="button">Onde o teorema falha</button>
+      </div>
+
+      <div id="arvRec"></div>
+
+      <div class="grid g4" id="arvMed" style="margin:var(--s-4) 0"></div>
+
+      <div class="callout" style="max-width:none"><span class="tag">Leitura da árvore</span>
+        <div id="arvLeitura"></div></div>
+
+      <div id="arvSvg" class="svgbox"></div>
+      <div id="arvTab"></div>
+    </section>
+
+    <!-- ============================================ 2. Resolvedor do Mestre -->
+    <section id="lab-mestre" class="lab">
+      <div class="lvl"><h2>Teorema Mestre, passo a passo</h2><span class="tick">lab 2</span></div>
+      <p class="small muted" style="max-width:var(--measure)">
+        O mesmo <span class="m">a</span>, <span class="m">b</span> e <span class="m">f(n)</span>
+        do lab 1, agora com o raciocínio escrito — incluindo a verificação da condição de
+        regularidade e o aviso de quando o teorema <em>não</em> se aplica.
+      </p>
+      <div class="card" id="mestreOut"></div>
+    </section>
+
+    <!-- =========================================== 3. Taxas de crescimento -->
+    <section id="lab-crescimento" class="lab">
+      <div class="lvl"><h2>Taxas de crescimento</h2><span class="tick">lab 3</span></div>
+      <p class="small muted" style="max-width:var(--measure)">
+        Para os exercícios de ordenar funções (itens 13, 14 e 19 da lista). O eixo vertical
+        está em escala logarítmica — sem isso, tudo acima de
+        <span class="m">n^2</span> sairia do gráfico.
+      </p>
+
+      <div class="controles">
+        <label class="fld" style="flex:1;min-width:14rem">
+          <span>n máximo: <strong id="crNlab">40</strong></span>
+          <input type="range" id="crN" min="5" max="100" value="40" step="1">
+        </label>
+      </div>
+      <div class="curvas" id="crCurvas"></div>
+      <div id="crPlot" class="svgbox"></div>
+      <div id="crTab"></div>
+    </section>
+
+    <!-- ================================================= 4. Trace de algoritmos -->
+    <section id="lab-trace" class="lab">
+      <div class="lvl"><h2>Trace passo a passo</h2><span class="tick">lab 4</span></div>
+      <p class="small muted" style="max-width:var(--measure)">
+        Seis algoritmos do curso, executados uma operação por vez, com contador.
+        Use <kbd>←</kbd> e <kbd>→</kbd> para navegar.
+      </p>
+
+      <div class="controles">
+        <label class="fld"><span>Algoritmo</span><select id="trAlgo"></select></label>
+        <label class="fld" id="trVetorWrap" style="flex:1;min-width:16rem">
+          <span>Vetor de entrada (números separados por vírgula)</span>
+          <input type="text" id="trVetor"></label>
+        <label class="fld" id="trParamWrap">
+          <span id="trParamRot">Parâmetro</span>
+          <input type="text" id="trParam" style="min-width:8rem"></label>
+        <button class="btn primary" id="trRodar" type="button" style="align-self:flex-end">Executar</button>
+      </div>
+
+      <div id="trInfo" style="margin:var(--s-4) 0"></div>
+
+      <div class="card" id="trPalco"></div>
+
+      <div class="row tight" style="justify-content:center;margin-top:var(--s-3)">
+        <button class="btn" id="trAnt" type="button">← Anterior</button>
+        <button class="btn" id="trProx" type="button">Próximo →</button>
+      </div>
+    </section>
+
+  </div>
+  </main>
+</div>
+
+<style>
+.lab { margin-bottom: var(--s-8); }
+.controles {
+  display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: flex-end;
+  padding: var(--s-4); background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--radius);
+}
+.controles input[type="number"], .controles input[type="text"] { min-width: 6rem; }
+.controles select { min-width: 10rem; }
+
+.svgbox {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: var(--s-4); margin: var(--s-4) 0; overflow-x: auto;
+}
+.svgbox svg { display: block; width: 100%; min-width: 30rem; height: auto; }
+
+/* --- medidas da árvore --- */
+.med {
+  display: flex; flex-direction: column; gap: 0.15rem;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s-3) var(--s-4);
+}
+.med .k { font-size: var(--t-xs); text-transform: uppercase; letter-spacing: 0.07em;
+          color: var(--ink-4); font-weight: 700; }
+.med .v { font-family: var(--font-math); font-style: italic; font-size: var(--t-md); }
+.med .v .op { font-style: normal; }
+
+/* --- SVG da árvore --- */
+.arv .guia { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+.arv .aresta { stroke: var(--line-2); stroke-width: 1.2; }
+.arv .no { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.5; }
+.arv .no.n1 { fill: var(--gold-soft); stroke: var(--gold); }
+.arv .no.n2 { fill: var(--ok-soft); stroke: var(--ok); }
+.arv .rot { font-family: var(--font-mono); font-size: 11px; fill: var(--ink-4); }
+.arv .folhas { font-family: var(--font-mono); font-size: 11px; fill: var(--ink-3); }
+
+/* --- gráfico de crescimento --- */
+.plot .grid { stroke: var(--line); stroke-width: 1; }
+.plot .axis { stroke: var(--line-2); stroke-width: 1.5; }
+.plot .tick { font-family: var(--font-mono); font-size: 10px; fill: var(--ink-4); }
+.plot .axlab { font-family: var(--font-math); font-style: italic; font-size: 13px; fill: var(--ink-3); }
+.plot .curva { fill: none; stroke-width: 2; stroke-linejoin: round; }
+.plot .curvarot { font-family: var(--font-mono); font-size: 10px; font-weight: 700; }
+
+/* Paleta das curvas: derivada do acento, com variação de matiz controlada. */
+.k0 { stroke: #8a93a3; fill: #8a93a3; color: #8a93a3; }
+.k1 { stroke: #2f7d6b; fill: #2f7d6b; color: #2f7d6b; }
+.k2 { stroke: #2b6ca3; fill: #2b6ca3; color: #2b6ca3; }
+.k3 { stroke: #2b4a8b; fill: #2b4a8b; color: #2b4a8b; }
+.k4 { stroke: #5a4a9c; fill: #5a4a9c; color: #5a4a9c; }
+.k5 { stroke: #8a6d1f; fill: #8a6d1f; color: #8a6d1f; }
+.k6 { stroke: #a8621f; fill: #a8621f; color: #a8621f; }
+.k7 { stroke: #a8322a; fill: #a8322a; color: #a8322a; }
+.k8 { stroke: #6d2340; fill: #6d2340; color: #6d2340; }
+@media (prefers-color-scheme: dark) {
+  .k0 { stroke: #8a93a3; fill: #8a93a3; color: #8a93a3; }
+  .k1 { stroke: #5fc5a8; fill: #5fc5a8; color: #5fc5a8; }
+  .k2 { stroke: #6fb0e0; fill: #6fb0e0; color: #6fb0e0; }
+  .k3 { stroke: #8fb3f0; fill: #8fb3f0; color: #8fb3f0; }
+  .k4 { stroke: #a99cee; fill: #a99cee; color: #a99cee; }
+  .k5 { stroke: #d6b45f; fill: #d6b45f; color: #d6b45f; }
+  .k6 { stroke: #e0a06a; fill: #e0a06a; color: #e0a06a; }
+  .k7 { stroke: #e88379; fill: #e88379; color: #e88379; }
+  .k8 { stroke: #d98aa8; fill: #d98aa8; color: #d98aa8; }
+}
+:root[data-theme="dark"] .k1 { stroke: #5fc5a8; fill: #5fc5a8; color: #5fc5a8; }
+:root[data-theme="dark"] .k2 { stroke: #6fb0e0; fill: #6fb0e0; color: #6fb0e0; }
+:root[data-theme="dark"] .k3 { stroke: #8fb3f0; fill: #8fb3f0; color: #8fb3f0; }
+:root[data-theme="dark"] .k4 { stroke: #a99cee; fill: #a99cee; color: #a99cee; }
+:root[data-theme="dark"] .k5 { stroke: #d6b45f; fill: #d6b45f; color: #d6b45f; }
+:root[data-theme="dark"] .k6 { stroke: #e0a06a; fill: #e0a06a; color: #e0a06a; }
+:root[data-theme="dark"] .k7 { stroke: #e88379; fill: #e88379; color: #e88379; }
+:root[data-theme="dark"] .k8 { stroke: #d98aa8; fill: #d98aa8; color: #d98aa8; }
+:root[data-theme="light"] .k1 { stroke: #2f7d6b; fill: #2f7d6b; color: #2f7d6b; }
+:root[data-theme="light"] .k2 { stroke: #2b6ca3; fill: #2b6ca3; color: #2b6ca3; }
+:root[data-theme="light"] .k3 { stroke: #2b4a8b; fill: #2b4a8b; color: #2b4a8b; }
+:root[data-theme="light"] .k4 { stroke: #5a4a9c; fill: #5a4a9c; color: #5a4a9c; }
+:root[data-theme="light"] .k5 { stroke: #8a6d1f; fill: #8a6d1f; color: #8a6d1f; }
+:root[data-theme="light"] .k6 { stroke: #a8621f; fill: #a8621f; color: #a8621f; }
+:root[data-theme="light"] .k7 { stroke: #a8322a; fill: #a8322a; color: #a8322a; }
+:root[data-theme="light"] .k8 { stroke: #6d2340; fill: #6d2340; color: #6d2340; }
+
+.curvas { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+.chk-cur {
+  display: inline-flex; align-items: center; gap: 0.4em; cursor: pointer;
+  font-family: var(--font-math); font-style: italic; font-size: var(--t-base);
+  border: 1px solid var(--line-2); border-radius: 999px;
+  padding: 0.15rem 0.65rem 0.15rem 0.4rem; background: var(--surface);
+}
+.chk-cur:hover { background: var(--surface-2); }
+.chk-cur input { position: absolute; opacity: 0; width: 0; height: 0; }
+.chk-cur .sw {
+  width: 14px; height: 3px; border-radius: 2px; display: inline-block;
+  background: currentColor; opacity: 0.25;
+}
+.chk-cur input:checked ~ .sw { opacity: 1; }
+.chk-cur input:focus-visible ~ .sw { outline: 2px solid var(--accent); outline-offset: 2px; }
+.chk-cur input:checked ~ span:last-child { font-weight: 700; }
+
+/* --- trace --- */
+.cells { display: flex; gap: 3px; flex-wrap: wrap; margin: var(--s-3) 0; }
+.cell {
+  display: flex; flex-direction: column; align-items: center; min-width: 2.7rem;
+  border: 1px solid var(--line-2); border-radius: var(--radius-sm);
+  background: var(--surface-2); padding: var(--s-2) var(--s-1) 0.15rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+.cell .val { font-family: var(--font-mono); font-size: var(--t-base); font-weight: 600;
+             font-variant-numeric: tabular-nums; }
+.cell .ix { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-4); }
+.cell.fora { opacity: 0.32; }
+.cell.piv { background: var(--gold-soft); border-color: var(--gold); color: var(--gold); }
+.cell.l   { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.cell.r   { background: var(--bad-soft); border-color: var(--bad); color: var(--bad); }
+.cell.fix { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); }
+.passotxt { font-size: var(--t-sm); max-width: var(--measure); color: var(--ink-2);
+            min-height: 3em; margin: 0; }
+
+.hanoi { display: flex; gap: var(--s-5); justify-content: center; align-items: flex-end;
+         min-height: 10rem; margin: var(--s-3) 0; }
+.torre { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.torre .discos { display: flex; flex-direction: column; justify-content: flex-end;
+                 gap: 2px; min-height: 8rem; }
+.disco {
+  height: 1.1rem; border-radius: 3px; display: flex; align-items: center;
+  justify-content: center; font-family: var(--font-mono); font-size: 0.7rem;
+  font-weight: 700; background: var(--accent-soft); border: 1px solid var(--accent);
+  color: var(--accent);
+}
+.torre .base { width: 7rem; height: 4px; background: var(--ink-4); border-radius: 2px; }
+.torre .rotulo { font-family: var(--font-mono); font-size: var(--t-sm); font-weight: 700;
+                 color: var(--ink-3); }
+.pilha { margin: var(--s-3) 0; }
+.pilha .prof { font-family: var(--font-mono); font-size: var(--t-xs); color: var(--ink-4);
+               border-left: 2px solid var(--accent); padding-left: var(--s-2); }
+
+kbd {
+  font-family: var(--font-mono); font-size: 0.85em;
+  border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 3px;
+  padding: 0 0.3em; background: var(--surface-2); color: var(--ink-3);
+}
+</style>
+
+<script src="js/app.js"></script>
+<script src="js/labs.js"></script>
+</body>
+</html>

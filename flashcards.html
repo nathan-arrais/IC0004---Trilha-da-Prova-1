@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IC0004 · Flashcards</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail"></aside>
+  <main class="main">
+  <div class="wrap">
+
+    <header class="page-head">
+      <span class="eyebrow">Repetição espaçada · 5 caixas</span>
+      <h1>Flashcards</h1>
+      <p class="lede">
+        Cada cartão vive numa caixa de 1 a 5. Acertou, sobe uma caixa e demora mais para
+        voltar; errou, volta para a caixa 1 e reaparece amanhã. Cartões na caixa 4 ou 5
+        contam como dominados.
+      </p>
+    </header>
+
+    <div class="row" style="justify-content:space-between;margin-bottom:var(--s-4)">
+      <div class="row tight" id="modos">
+        <span class="xs muted" style="text-transform:uppercase;letter-spacing:.08em;font-weight:700">Modo</span>
+        <button class="btn sm primary" data-modo="devidos" type="button">Devidos hoje</button>
+        <button class="btn sm" data-modo="todos" type="button">Deck inteiro</button>
+        <button class="btn sm" data-modo="errados" type="button">Só os que erro</button>
+      </div>
+      <div class="xs muted" id="placar"></div>
+    </div>
+
+    <div id="sessao"></div>
+
+    <div class="lvl"><h2>Decks</h2><span class="tick">clique para filtrar</span></div>
+    <div class="grid g3" id="decks"></div>
+
+    <div class="callout tip" style="margin-top:var(--s-6);max-width:var(--measure)">
+      <span class="tag">Intervalos</span>
+      <p>Caixa 1 → hoje · caixa 2 → 1 dia · caixa 3 → 3 dias · caixa 4 → 7 dias ·
+         caixa 5 → 21 dias. Se a prova é em menos de três semanas, use
+         <strong>Deck inteiro</strong> nos últimos dias para varrer tudo, independentemente
+         do vencimento.</p>
+      <p class="xs muted">Atalhos: <kbd>espaço</kbd> vira o cartão · <kbd>1</kbd> errei ·
+         <kbd>2</kbd> acertei.</p>
+    </div>
+
+  </div>
+  </main>
+</div>
+
+<style>
+.fcard {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  min-height: 21rem;
+  box-shadow: var(--shadow-sm);
+}
+.fcard > header { flex: none; }
+.fcard .frente {
+  font-size: var(--t-lg);
+  line-height: 1.5;
+  flex: none;
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--line);
+  text-wrap: balance;
+}
+.fcard .frente code { font-size: 0.85em; }
+.fcard .verso { flex: 1; display: flex; flex-direction: column; gap: var(--s-3); }
+.fcard .verso > * { max-width: var(--measure); }
+.fcard .verso .eq { margin: var(--s-2) 0; }
+.fcard > footer { flex: none; margin-top: auto; padding-top: var(--s-3); }
+.fcard .boxes { display: inline-flex; gap: 3px; }
+.fcard .boxes i {
+  width: 14px; height: 6px; border-radius: 1px;
+  border: 1px solid var(--line-2); display: block;
+}
+.fcard .boxes i.on { background: var(--accent); border-color: var(--accent); }
+
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  border: 1px solid var(--line-2);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 0 0.3em;
+  background: var(--surface-2);
+  color: var(--ink-3);
+}
+
+.deckcard {
+  display: flex; flex-direction: column; gap: var(--s-2); align-items: flex-start;
+  text-align: left; cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: var(--s-4);
+  font-family: var(--font-ui); color: inherit;
+  transition: border-color 0.12s, background 0.12s;
+}
+.deckcard:hover { border-color: var(--line-2); background: var(--surface-2); }
+.deckcard.on { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.deckcard .nome { font-weight: 650; font-size: var(--t-md); }
+.deckcard .desc { line-height: 1.45; }
+.deckcard .bar { width: 100%; }
+</style>
+
+<script src="js/app.js"></script>
+<script src="data/flashcards.js"></script>
+<script src="js/flashcards.js"></script>
+</body>
+</html>
