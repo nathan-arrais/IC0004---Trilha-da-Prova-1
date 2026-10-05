@@ -51,7 +51,7 @@
         var feito = r && r.finished;
         var andando = r && r.started && !r.finished;
         var nota = feito ? AG.totalScore(s, r) : null;
-        var maxPts = s.questoes.reduce(function (a, q) { return a + q.pts; }, 0);
+        var maxPts = AG.maxScore(s);
 
         return '<article class="simcard' + (s.oficial ? ' oficial' : '') + '">'
           + '<header>'
@@ -85,11 +85,14 @@
 
       + '<div class="callout tip" style="margin-top:var(--s-6);max-width:var(--measure)">'
       +   '<span class="tag">Como usar</span>'
-      +   '<p>Faça o <strong>Simulado 1</strong> primeiro, cronometrado e sem consulta — é a '
-      +   'prova real de 2026.1 e serve de diagnóstico. Depois revise o que errou na lista e '
-      +   'nos flashcards, e só então passe aos simulados 2 e 3.</p>'
-      +   '<p class="xs muted">A duração de 100 minutos é uma estimativa: o PDF da prova não '
-      +   'informa o tempo oficial. Você pode ajustar antes de começar.</p>'
+      +   '<p>Comece pela <strong>Prova 1 de 2026.1</strong>, cronometrada e sem consulta — é a '
+      +   'mais recente e serve de diagnóstico. Depois revise o que errou na lista e nos '
+      +   'flashcards, e siga para <strong>2025.2</strong> e <strong>2025.1</strong>: elas '
+      +   'cobram formatos que 2026.1 não cobrou — recorrência a partir de prosa, potenciação '
+      +   'modular e a questão em que o assintótico não decide. Os dois simulados autorais '
+      +   'ficam para o fim.</p>'
+      +   '<p class="xs muted">A duração de 100 minutos é uma estimativa: os PDFs das provas não '
+      +   'informam o tempo oficial. Você pode ajustar antes de começar.</p>'
       + '</div>';
 
     AG.$$('[data-abrir]').forEach(function (b) {
@@ -263,7 +266,7 @@
     tela = 'correcao';
     pararTimer();
     var s = atual, r = est(s.id);
-    var maxPts = s.questoes.reduce(function (a, q) { return a + q.pts; }, 0);
+    var maxPts = AG.maxScore(s);
 
     AG.$('#palco').innerHTML =
       '<div class="provahd">'
@@ -353,7 +356,9 @@
       var avaliadas = s.questoes.filter(function (q) {
         return typeof r2.scores[q.id] === 'number';
       }).length;
-      var cls = t >= 7 ? 'ok' : t >= 5 ? 'warn' : 'bad';
+      /* Percentual do máximo DESTA prova — as três reais valem 11,0, 10,0 e 11,5. */
+      var frac = maxPts > 0 ? t / maxPts : 0;
+      var cls = frac >= 0.7 ? 'ok' : frac >= 0.5 ? 'warn' : 'bad';
       AG.$('#notafinal').innerHTML =
         '<span class="xs">nota estimada</span>'
         + '<strong class="' + cls + '">' + String(t).replace('.', ',') + '</strong>'

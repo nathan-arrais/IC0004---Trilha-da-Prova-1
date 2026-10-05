@@ -16,43 +16,59 @@
       <span class="eyebrow">Prova 1 · Slides 01–03 · Lista 1</span>
       <h1>O caminho até a nota máxima</h1>
       <p class="lede">
-        Esta trilha foi derivada da <strong>Prova 1 de 2026.1</strong>, do material do Prof. George Lima
-        e da Lista de Exercícios Parte&nbsp;1. O padrão da prova é estável — e ele revela algo útil:
-        <strong>metade dos pontos é mecânica</strong>, cobrada por procedimentos que se treinam por
-        repetição. Comece por eles.
+        Esta trilha foi derivada das <strong>três Prova 1 do Prof. George Lima</strong> — 2025.1,
+        2025.2 e 2026.1, todas com gabarito — mais os slides e a Lista de Exercícios
+        Parte&nbsp;1. Com três amostras o padrão fica visível: <strong>divisão e conquista
+        responde por metade da nota</strong> em todas elas, e três temas caíram nas três provas.
+        É por eles que se começa.
       </p>
     </header>
 
-    <!-- ===================================================== Tese: os 11 pontos -->
+    <!-- ===================================================== Tese: onde estão os pontos -->
     <section class="card" aria-labelledby="h-dist">
       <header>
-        <h2 id="h-dist" style="font-size:var(--t-lg)">Onde estão os 11 pontos</h2>
-        <p class="meta">10 pontos + 1 extra, distribuídos por esforço de resolução, não por ordem na prova.</p>
+        <h2 id="h-dist" style="font-size:var(--t-lg)">Onde estão os pontos</h2>
+        <p class="meta">
+          Média das três provas (que valeram 11,0, 10,0 e 11,5 pts), distribuída por esforço de
+          resolução — não por ordem na prova.
+        </p>
       </header>
 
       <div class="ptbar" role="img"
-           aria-label="Distribuição: 5,5 pontos mecânicos, 2,5 pontos de média dificuldade, 3,0 pontos de projeto criativo.">
-        <div class="seg ok"   style="flex:5.5">
-          <span class="v">5,5</span><span class="l">Mecânico</span>
+           aria-label="Distribuição média: 4,3 pontos mecânicos, 3,1 pontos de média dificuldade, 3,5 pontos de projeto criativo.">
+        <div class="seg ok"   style="flex:4.3">
+          <span class="v">4,3</span><span class="l">Mecânico</span>
         </div>
-        <div class="seg warn" style="flex:2.5">
-          <span class="v">2,5</span><span class="l">Técnico</span>
+        <div class="seg warn" style="flex:3.1">
+          <span class="v">3,1</span><span class="l">Técnico</span>
         </div>
-        <div class="seg bad"  style="flex:3">
-          <span class="v">3,0</span><span class="l">Criativo</span>
+        <div class="seg bad"  style="flex:3.5">
+          <span class="v">3,5</span><span class="l">Criativo</span>
         </div>
       </div>
       <div class="ptaxis">
-        <span style="flex:5.5">acumula <strong>5,5</strong></span>
-        <span style="flex:2.5">acumula <strong>8,0</strong></span>
-        <span style="flex:3">acumula <strong>10,0&nbsp;+&nbsp;1,0</strong></span>
+        <span style="flex:4.3">acumula <strong>4,3</strong></span>
+        <span style="flex:3.1">acumula <strong>7,4</strong></span>
+        <span style="flex:3.5">acumula <strong>10,8</strong></span>
       </div>
 
       <p class="small muted" style="max-width:var(--measure)">
-        <strong>Mecânico</strong> = invariante de laço, Teorema Mestre nos três casos, leitura de função
-        recursiva. São padrões fechados: quem treinou, acerta. <strong>Criativo</strong> = inventar a
-        decomposição de um problema novo. É onde se perde nota, e é a última coisa a treinar — não a primeira.
+        <strong>Mecânico</strong> = Teorema Mestre nos três casos, leitura de função recursiva,
+        invariante de laço. São padrões fechados: quem treinou, acerta.
+        <strong>Técnico</strong> = somatórios de laços aninhados e árvore de recursão, para as
+        recorrências que o Teorema Mestre não resolve. <strong>Criativo</strong> = inventar a
+        decomposição de um problema novo.
       </p>
+
+      <div class="callout warn">
+        <span class="tag">O que mudou com três provas</span>
+        <p>
+          Olhando só para 2026.1, o bloco mecânico parecia valer 5,5 e o criativo 3,0. Nas três
+          provas a conta é outra: <strong>o criativo passa o mecânico em 2025.1</strong> (4,5 contra
+          4,0), porque aquela prova trouxe <em>duas</em> questões de projeto. Projetar divisão e
+          conquista não é a sobremesa da prova — é um terço dela, e caiu em 3 de 3.
+        </p>
+      </div>
     </section>
 
     <!-- ========================================================== Seu progresso -->
@@ -61,17 +77,19 @@
     <div class="grid g4" id="stats"></div>
 
     <!-- ========================================================= Anatomia -->
-    <div class="lvl"><h2>Anatomia da Prova 1</h2><span class="tick">2026.1 · 13/04/2026</span></div>
+    <div class="lvl"><h2>Anatomia da Prova 1</h2><span class="tick">3 provas · 2025.1 → 2026.1</span></div>
 
     <div class="tw">
       <table>
         <caption>
-          Extraído da prova do semestre anterior, com gabarito. A coluna <em>retorno</em> pondera
-          pontos ganhos contra o esforço de aprender o tema desde zero.
+          Cada tema cobrado nas três Avaliação 1, com a frequência com que apareceu e a média de
+          pontos quando apareceu. A coluna <em>retorno</em> pondera pontos ganhos contra o esforço
+          de aprender o tema desde zero — frequência alta e dificuldade baixa é o que se estuda
+          primeiro.
         </caption>
         <thead>
           <tr>
-            <th>Q</th><th class="num">Pts</th><th>Tema cobrado</th>
+            <th>Tema cobrado</th><th class="num">Freq</th><th class="num">Pts méd</th>
             <th>Dificuldade</th><th>Retorno</th><th>Treinar em</th>
           </tr>
         </thead>
@@ -115,12 +133,15 @@
       <div class="card">
         <h3>Na semana da prova</h3>
         <ol class="steps">
-          <li><div><strong>Simulado 1</strong> (a prova real de 2026.1), cronometrado, sem consulta.
+          <li><div><strong>Prova 1 de 2026.1</strong> (a mais recente), cronometrada, sem consulta.
             Serve de diagnóstico, não de treino.</div></li>
           <li><div><strong>Revise só o que errou</strong> — use o filtro “errei” na lista e o modo
             “só os que erro” nos flashcards.</div></li>
-          <li><div><strong>Simulados 2 e 3</strong>, no mesmo molde, para confirmar que o padrão
-            está automatizado.</div></li>
+          <li><div><strong>Provas de 2025.2 e 2025.1</strong>, também com gabarito oficial. Elas
+            cobram formatos que 2026.1 não cobrou — recorrência a partir de prosa, potenciação
+            modular, e a questão em que o assintótico não decide.</div></li>
+          <li><div><strong>Os dois simulados autorais</strong>, para confirmar que o padrão está
+            automatizado depois de já conhecer as três provas reais.</div></li>
           <li><div><strong>Releia o checklist de erros</strong> na véspera. É o que mais converte
             raciocínio certo em ponto cheio.</div></li>
         </ol>
@@ -129,7 +150,8 @@
 
     <p class="xs muted" style="margin-top:var(--s-7);max-width:var(--measure)">
       Conteúdo construído a partir dos slides 01–03 do Prof. George Lima, da Lista de Exercícios
-      Parte&nbsp;1 (Profs. George Lima e Rafael Melo) e da Prova 1 de 2026.1 com gabarito.
+      Parte&nbsp;1 (Profs. George Lima e Rafael Melo) e das três Prova 1 com gabarito —
+      2025.1 (15/05/2025), 2025.2 (23/10/2025) e 2026.1 (13/04/2026).
       Os slides 04–07 e 09–10 cobrem a Prova 2 e estão fora deste escopo.
     </p>
 
@@ -208,83 +230,103 @@
   'use strict';
   var m = AG.m, esc = AG.esc;
 
-  /* ------------------------------------------------ Anatomia da prova */
+  /* ------------------------------------------------ Anatomia da prova
+     Derivada das três Avaliação 1 com gabarito. "freq" é em quantas das 3
+     provas o tema apareceu; "pts" é a média de pontos quando apareceu.
+     Ordem: frequência primeiro, pontos como critério de desempate.        */
   var ANAT = [
-    { q: '1', pts: '2,0', tema: 'Resolver 4 recorrências — Teorema Mestre nos casos 1, 2 e 3, e '
-        + m('T(n) = 2T(n−1) + n') + ' pela árvore de recursão',
-      d: 2, ret: 'Altíssimo', obs: '3 dos 4 itens são receita fechada',
+    { tema: 'Resolver recorrências dadas — Teorema Mestre nos casos 1, 2 e 3, e árvore de '
+        + 'recursão quando ele não se aplica',
+      freq: 3, pts: '2,2', d: 2, ret: 'Altíssimo',
+      obs: '2025.1 Q1 · 2025.2 Q2 · 2026.1 Q1 — a única questão presente nas três com o mesmo formato',
       link: 'estudar.html#m2', linkTxt: 'Módulo 2' },
-    { q: '2', pts: '2,0', tema: 'Complexidade de laços aninhados — montar e resolver o somatório ('
-        + m('Θ(n² log n)') + ')',
-      d: 2, ret: 'Alto', obs: 'depende de somatórios do Módulo 0',
-      link: 'estudar.html#m0-somas', linkTxt: 'Somatórios' },
-    { q: '3', pts: '2,0', tema: 'Invariante de laço com inicialização, manutenção e término',
-      d: 1, ret: 'Altíssimo', obs: 'é um template de 3 parágrafos',
-      link: 'estudar.html#m1-inv', linkTxt: 'Invariantes' },
-    { q: '4', pts: '2,0', tema: 'Ler uma função recursiva de divisão e conquista: dizer o que ela '
-        + 'retorna e extrair a recorrência',
-      d: 1, ret: 'Alto', obs: 'leitura de código, não invenção',
+    { tema: 'Analisar um pseudocódigo dado: dizer o que ele retorna, extrair a recorrência e '
+        + 'fornecer o ' + m('Θ'),
+      freq: 3, pts: '2,5', d: 2, ret: 'Altíssimo',
+      obs: '2025.1 Q3 · 2025.2 Q3 · 2026.1 Q4 — leitura de código, não invenção',
       link: 'estudar.html#m3', linkTxt: 'Módulo 3' },
-    { q: '5', pts: '2,0', tema: 'Projetar um algoritmo de divisão e conquista (vetor unimodal → '
-        + m('Θ(log n)') + ')',
-      d: 3, ret: 'Médio', obs: 'exige inventar a decomposição',
+    { tema: 'Projetar um algoritmo de divisão e conquista do zero, com a recorrência e a '
+        + 'complexidade',
+      freq: 3, pts: '3,5', d: 3, ret: 'Altíssimo',
+      obs: '2025.1 Q4+Q5 · 2025.2 Q4 · 2026.1 Q5+Q6 — o maior bloco de pontos, e duas provas '
+        + 'trouxeram duas questões dessas',
       link: 'lista.html?tag=projeto', linkTxt: 'Projeto D&C' },
-    { q: '6', pts: '1,0', tema: 'D&C com retorno enriquecido — maior diferença '
-        + m('A[j] − A[i]') + ' em ' + m('Θ(n)'),
-      d: 3, ret: 'Extra', obs: 'ponto extra: só depois de fechar o resto',
-      link: 'lista.html?tag=projeto', linkTxt: 'Projeto D&C' }
+    { tema: 'Complexidade de laços aninhados — montar e resolver o somatório ('
+        + m('Θ(n² log n)') + ', ' + m('Θ(n log² n)') + ')',
+      freq: 2, pts: '2,0', d: 2, ret: 'Alto',
+      obs: '2025.1 Q2 · 2026.1 Q2 — depende dos somatórios do Módulo 0',
+      link: 'estudar.html#m0-somas', linkTxt: 'Somatórios' },
+    { tema: 'Invariante de laço com inicialização, manutenção e término',
+      freq: 1, pts: '2,0', d: 1, ret: 'Alto',
+      obs: '2026.1 Q3 — só 1 das 3 provas, mas é um template de 3 parágrafos: custo de aprender '
+        + 'quase zero, então vale manter no bolso',
+      link: 'estudar.html#m1-inv', linkTxt: 'Invariantes' },
+    { tema: 'Notação assintótica conceitual — escolher entre dois programas numa faixa de '
+        + m('n') + ', onde constantes decidem',
+      freq: 1, pts: '2,0', d: 2, ret: 'Médio',
+      obs: '2025.2 Q1 — o assintótico não decide em ' + m('n') + ' pequeno; é a questão mais '
+        + 'conceitual do acervo',
+      link: 'estudar.html#m1-assint', linkTxt: 'Assintótico' }
   ];
 
   AG.$('#anat').innerHTML = ANAT.map(function (r) {
     var rp = r.ret === 'Altíssimo' ? 'ok' : r.ret === 'Alto' ? 'accent'
            : r.ret === 'Médio' ? 'warn' : 'plain';
+    /* 3/3 ganha destaque: é o que decide a ordem de estudo. */
+    var fp = r.freq === 3 ? 'ok' : r.freq === 2 ? 'accent' : 'plain';
     return '<tr>'
-      + '<td class="num"><strong>' + r.q + '</strong></td>'
+      + '<td>' + r.tema + '<br><span class="xs muted">' + r.obs + '</span></td>'
+      + '<td class="num"><span class="pill ' + fp + '">' + r.freq + '/3</span></td>'
       + '<td class="num">' + r.pts + '</td>'
-      + '<td>' + r.tema + '<br><span class="xs muted">' + esc(r.obs) + '</span></td>'
       + '<td>' + AG.diff(r.d) + '</td>'
       + '<td><span class="pill ' + rp + '">' + esc(r.ret) + '</span></td>'
       + '<td><a href="' + r.link + '">' + esc(r.linkTxt) + '</a></td>'
       + '</tr>';
   }).join('');
 
-  /* ------------------------------------------------------------ Blocos */
+  /* ------------------------------------------------------------ Blocos
+     Tetos recalibrados sobre a média das três provas: 4,3 / 3,1 / 3,5.  */
   var BLOCOS = [
-    { cls: 'a', letra: 'A', nome: 'Travar o mecânico', teto: '5,5', de: '0,0',
-      qs: 'Q3 · Q1a,b,c · Q4',
-      resumo: 'Procedimentos fechados. Se você só fizer este bloco e fizer bem, já sai da prova aprovado.',
+    { cls: 'a', letra: 'A', nome: 'Travar o mecânico', teto: '4,3', de: '0,0',
+      qs: 'ler pseudocódigo · Teorema Mestre · invariante',
+      resumo: 'Procedimentos fechados, presentes em todas as provas. Quem treinou, acerta — e é o único bloco em que errar é desperdício.',
       itens: [
-        'O template de invariante de laço — as três propriedades, sempre nesta ordem',
+        'Ler uma recursiva e contar: quantas chamadas, de que tamanho, com que custo local',
         'Teorema Mestre: identificar <span class="m">a</span>, <span class="m">b</span>, <span class="m">f(n)</span>, comparar com <span class="m">n<sup>log<sub>b</sub> a</sup></span> e decidir o caso',
         'A condição de regularidade do caso 3 (e por que ela existe)',
-        'Ler uma recursiva e contar: quantas chamadas, de que tamanho, com que custo local'
+        'O template de invariante de laço — as três propriedades, sempre nesta ordem',
+        'Separar melhor e pior caso de uma mesma recursiva: muda o <em>número</em> de chamadas, não o tamanho (2025.1 Q3)'
       ],
-      links: [['estudar.html#m1-inv', 'Invariantes'], ['estudar.html#m2-mestre', 'Teorema Mestre'],
-              ['flashcards.html?deck=D2', 'Flashcards D2']] },
-    { cls: 'b', letra: 'B', nome: 'Somar e desenhar', teto: '8,0', de: '5,5',
-      qs: 'Q2 · Q1d',
+      links: [['estudar.html#m3', 'Módulo 3'], ['estudar.html#m2-mestre', 'Teorema Mestre'],
+              ['estudar.html#m1-inv', 'Invariantes'], ['flashcards.html?deck=D2', 'Flashcards D2']] },
+    { cls: 'b', letra: 'B', nome: 'Somar e desenhar', teto: '7,4', de: '4,3',
+      qs: 'laços aninhados · recorrências subtrativas',
       resumo: 'Onde o Teorema Mestre não alcança. Exige domínio de somatórios e da árvore de recursão.',
       itens: [
         'Somatórios: aritmético, geométrico (finito e infinito) e harmônico',
-        'Traduzir laços aninhados em somatório e resolver de dentro para fora',
+        'Traduzir laços aninhados em somatório e resolver de dentro para fora — <span class="m">Θ(n² log n)</span> e <span class="m">Θ(n log² n)</span> já caíram',
+        'Distinguir laço aditivo (<span class="m">k ← k+2</span>, dá <span class="m">Θ(n)</span>) de multiplicativo (<span class="m">j ← j×2</span>, dá <span class="m">Θ(log n)</span>)',
         'Árvore de recursão: altura, custo por nível, número de folhas',
-        'Recorrências subtrativas — <span class="m">T(n−1)</span>, <span class="m">2T(n−1)</span> — que o Teorema Mestre não resolve',
-        'Remoção de histórico, para recorrências com somatório'
+        'Recorrências subtrativas — <span class="m">2T(n−1) + c = Θ(2<sup>n</sup>)</span> caiu nas <strong>três</strong> provas',
+        '<span class="m">T(n−1) + log n</span> → soma de logaritmos → <span class="m">log(n!) = Θ(n log n)</span> (2025.2 Q2)',
+        'Remoção de histórico, para recorrências com somatório (2025.1 Q1b)'
       ],
       links: [['estudar.html#m0-somas', 'Somatórios'], ['estudar.html#m2-arvore', 'Árvore de recursão'],
-              ['labs.html#lab-arvore', 'Lab: árvore']] },
-    { cls: 'c', letra: 'C', nome: 'Projetar do zero', teto: '10,0 + 1,0', de: '8,0',
-      qs: 'Q5 · Q6',
-      resumo: 'Não tem receita. O que existe é um repertório de decomposições — e ele se constrói resolvendo problemas.',
+              ['estudar.html#m2-hist', 'Remoção de histórico'], ['labs.html#lab-arvore', 'Lab: árvore']] },
+    { cls: 'c', letra: 'C', nome: 'Projetar do zero', teto: '10,8', de: '7,4',
+      qs: 'projetar D&C — caiu em 3 de 3',
+      resumo: 'Não tem receita fechada, mas tem repertório: as três provas usaram apenas quatro formas de decomposição. Reconhecer qual se aplica é metade do ponto.',
       itens: [
-        'Descartar metade com informação local (unimodal, <span class="m">X[i] = i</span>, busca binária modificada)',
-        'Retorno enriquecido: devolver mais que a resposta para combinar em <span class="m">Θ(1)</span>',
+        '<strong>Descartar metade com informação local</strong> — vetor unimodal (2026.1 Q5), contar ocorrências em vetor ordenado (2025.1 Q3), busca binária modificada',
+        '<strong>Retorno enriquecido</strong> — devolver mais que a resposta para combinar em <span class="m">Θ(1)</span>: a tripla <span class="m">(min, max, dif)</span> de <span class="m">MaxDif</span> caiu <strong>duas vezes</strong> (2025.2 Q3, 2026.1 Q6)',
+        '<strong>Contar para validar um candidato</strong> — a recursão só gera candidatos, a validação é linear: elemento majoritário (2025.2 Q4)',
+        '<strong>Dividir o expoente, não a entrada</strong> — <span class="m">x<sup>n</sup></span> e <span class="m">x<sup>n</sup> mod k</span> em <span class="m">Θ(log n)</span> (2025.1 Q4)',
         'Reduzir o número de subproblemas (Strassen, Karatsuba)',
-        'Elemento majoritário e par de pontos mais próximos',
-        'Reconhecer, no enunciado, qual dessas formas se aplica'
+        'Sempre explicitar <span class="m">T(n) = aT(n/b) + f(n)</span>: a nota vem do equacionamento, não só da resposta'
       ],
-      links: [['lista.html?tag=projeto', 'Exercícios de projeto'], ['estudar.html#m3', 'Módulo 3'],
-              ['simulado.html', 'Simulados']] }
+      links: [['estudar.html#m3-repertorio', 'Repertório de decomposições'],
+              ['lista.html?tag=projeto', 'Exercícios de projeto'],
+              ['estudar.html#m3-pot', 'Potenciação'], ['simulado.html', 'Simulados']] }
   ];
 
   AG.$('#blocos').innerHTML = BLOCOS.map(function (b) {
@@ -302,11 +344,14 @@
       + '</section>';
   }).join('');
 
-  /* ------------------------------------------------------------- Erros */
+  /* ------------------------------------------------------------- Erros
+     ATENÇÃO: o progresso é salvo por ÍNDICE ('erro0', 'erro1', …). Só
+     acrescente itens NO FIM — inserir no meio desloca o que já foi marcado. */
   var ERROS = [
     ['Responder em O quando a prova pede Θ',
-     'O enunciado de 2026.1 abre dizendo: “limites assintóticos devem ser fornecidos em notação Θ”. '
-     + 'Dar ' + m('O(n log n)') + ' onde cabia ' + m('Θ(n log n)') + ' é resposta incompleta.'],
+     'Tanto 2025.1 quanto 2026.1 abrem dizendo: “limites assintóticos devem ser fornecidos em '
+     + 'notação Θ”. Dar ' + m('O(n log n)') + ' onde cabia ' + m('Θ(n log n)') + ' é resposta '
+     + 'incompleta.'],
     ['Aplicar o Teorema Mestre onde ele não vale',
      'Recorrências subtrativas (' + m('T(n−1)') + ') e casos em que ' + m('f(n)') + ' não é '
      + 'polinomialmente comparável a ' + m('n<sup>log<sub>b</sub> a</sup>') + ' — como '
@@ -318,19 +363,31 @@
      'Inicialização, manutenção e término. Faltando o término, não se demonstrou a corretude — '
      + 'só que a propriedade se mantém. É ele que fecha a prova.'],
     ['Dar a complexidade sem mostrar a recorrência',
-     'Nas questões 4, 5 e 6 o enunciado pede explicitamente a equação de recorrência. '
-     + 'A complexidade certa sem a recorrência perde parte dos pontos.'],
+     'Em <strong>todas</strong> as três provas as questões de D&amp;C pedem explicitamente a '
+     + 'equação de recorrência — 2025.1 Q4 chega a dizer “fato que você deve mostrar através da '
+     + 'recorrência”. A complexidade certa sem a recorrência perde parte dos pontos.'],
     ['Somar os laços em vez de multiplicar (e vice-versa)',
      'Laços aninhados multiplicam; laços em sequência somam e o maior domina. '
-     + 'Na Q2 o laço interno é ' + m('Θ(log<sub>3</sub> n)') + ' <em>independente</em> de '
-     + m('i') + ' e ' + m('j') + ' — reconhecer isso é o que destrava o somatório.'],
+     + 'Na Q2 de 2026.1 o laço interno é ' + m('Θ(log<sub>3</sub> n)') + ' <em>independente</em> de '
+     + m('i') + ' e ' + m('j') + ' — reconhecer isso é o que destrava o somatório. Na Q2 de '
+     + '2025.1 os três laços também são independentes, e o produto dá ' + m('Θ(n log² n)') + '.'],
     ['Confundir o caso médio com o melhor caso',
      'Quick-sort e k-ésimo menor são ' + m('Θ(n²)') + ' no pior caso. O '
      + m('Θ(n log n)') + ' famoso é o caso <em>médio</em>, e vem de uma análise probabilística '
      + 'com remoção de histórico.'],
     ['Perder o ponto extra por falta de tempo',
-     'A Q6 vale 1,0 e é curta para quem reconhece o padrão “retorno enriquecido”. '
-     + 'Deixe-a para o fim, mas reserve tempo — é nota acima de 10.']
+     'Duas das três provas trazem questão extra ou opcional (1,0 em 2026.1; 1,5 em 2025.1), e '
+     + 'as duas são curtas para quem reconhece o padrão. Deixe-a para o fim, mas reserve tempo.'],
+    ['Usar o assintótico para decidir em n pequeno',
+     'A Q1 de 2025.2 pune exatamente isso: ' + m('g(n) = 100√n') + ' cresce menos que '
+     + m('f(n) = n + 5/n') + ', mas para ' + m('n ≤ 1.000') + ' o programa ' + m('Θ(n)')
+     + ' é o mais rápido — a constante 100 só perde a partir de ' + m('n = 10.000') + '. '
+     + 'Quando o enunciado fixa uma faixa de ' + m('n') + ', compare os valores, não as ordens.'],
+    ['Não dizer qual é o custo da combinação',
+     'Numa questão de projeto, o que distingue ' + m('Θ(n)') + ' de ' + m('Θ(n log n)')
+     + ' é quanto custa combinar as metades. O padrão “retorno enriquecido” existe só para '
+     + 'baixar essa combinação a ' + m('Θ(1)') + ' — e dizer <em>o que</em> cada chamada devolve '
+     + 'é parte da resposta, não um detalhe de implementação.']
   ];
 
   var st = AG.load();
@@ -366,9 +423,9 @@
       { k: 'Prioritários para a prova', v: xProva.feitos + '<span class="muted" style="font-size:var(--t-base)">/' + xProva.total + '</span>',
         n: 'questões que mapeiam direto no padrão', p: AG.pct(xProva.feitos, xProva.total),
         cls: 'warn', href: 'lista.html?prova=alta' },
-      { k: 'Melhor simulado', v: s.melhor === null ? '—' : String(s.melhor).replace('.', ',') + '<span class="muted" style="font-size:var(--t-base)">/11</span>',
+      { k: 'Melhor simulado', v: s.melhor === null ? '—' : String(s.melhor).replace('.', ',') + '<span class="muted" style="font-size:var(--t-base)">/' + String(s.melhorMax).replace('.', ',') + '</span>',
         n: s.feitos + ' de ' + s.total + ' simulados feitos',
-        p: s.melhor === null ? 0 : AG.pct(s.melhor, 11), cls: 'bad', href: 'simulado.html' }
+        p: s.melhor === null ? 0 : AG.pct(s.melhor, s.melhorMax), cls: 'bad', href: 'simulado.html' }
     ];
 
     AG.$('#stats').innerHTML = cards.map(function (c2) {

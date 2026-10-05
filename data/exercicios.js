@@ -98,10 +98,10 @@ window.EXERCICIOS = [
   h: 'É a soma que você aprendeu na escola: da direita para a esquerda, propagando o "vai um".',
   sol: [
     '<strong>Enunciado formal.</strong><br>'
-    + '<em>Entrada:</em> dois arranjos $A[1..n]$ e $B[1..n]$ com $A[i], B[i] ∈ \\{0, 1\\}$, '
+    + '<em>Entrada:</em> dois arranjos $A[1..n]$ e $B[1..n]$ com $A[i], B[i] ∈ {0, 1}$, '
     + 'representando os inteiros $a = \\S{i=1}{n} A[i]·2^{n−i}$ e $b = \\S{i=1}{n} B[i]·2^{n−i}$ '
     + '(bit mais significativo no índice 1).<br>'
-    + '<em>Saída:</em> arranjo $C[1..n+1]$ com $C[i] ∈ \\{0,1\\}$ tal que '
+    + '<em>Saída:</em> arranjo $C[1..n+1]$ com $C[i] ∈ {0,1}$ tal que '
     + '$\\S{i=1}{n+1} C[i]·2^{n+1−i} = a + b$.',
     '<strong>Algoritmo.</strong>'
     + '<pre class="pseudo"><span class="ln"><span class="fnn">SomaBinaria</span>(A, B, n)</span>'
@@ -339,7 +339,7 @@ window.EXERCICIOS = [
 
 { id: 'L1-12', n: 12, s: 1, t: 'aberta', d: 3, p: 'media', g: ['contagem', 'torneio'],
   e: '<p>Descreva um algoritmo para determinar o <strong>segundo menor</strong> elemento de um '
-   + 'conjunto $S = \\{s_1, s_2, …, s_n\\}$. Determine exatamente o número de comparações '
+   + 'conjunto $S = {s_1, s_2, …, s_n}$. Determine exatamente o número de comparações '
    + 'efetuadas pelo algoritmo. O algoritmo será considerado tão melhor quanto menor for esse '
    + 'número de comparações.</p>',
   h: 'O segundo menor perdeu exatamente uma vez — e perdeu para o menor. Quantos elementos '
@@ -834,11 +834,11 @@ window.EXERCICIOS = [
       + 'Tome $c_2 = \\f{1}{1000}$.',
       '<em>Limite inferior:</em> queremos $\\f{n^2}{1000} − 999n ≥ c_1 n^2$. Com '
       + '$c_1 = \\f{1}{2000}$, isso equivale a $\\f{n^2}{2000} ≥ 999n$, ou seja '
-      + '$n ≥ 1{\\,}998{\\,}000$. Tome $n_0 = 1{\\,}998{\\,}000$.',
+      + '$n ≥ 1.998.000$. Tome $n_0 = 1.998.000$.',
       'Com $c_1 = \\f{1}{2000}$, $c_2 = \\f{1}{1000}$ e esse $n_0$, vale $Θ(n^2)$. ∎',
       '<em>Note que $n_0$ é enorme — e é perfeitamente legítimo. A definição só exige que '
       + '<strong>exista</strong> algum $n_0$.</em>'],
-  r: 'Verdadeiro, com $c_1 = 1/2000$, $c_2 = 1/1000$ e $n_0 = 1\\,998\\,000$.' },
+  r: 'Verdadeiro, com $c_1 = 1/2000$, $c_2 = 1/1000$ e $n_0 = 1.998.000$.' },
 
 { id: 'L1-24u', n: 24, sub: 'u', s: 2, t: 'vf', d: 1, p: 'alta', g: ['vf', 'theta', 'log'],
   e: '<p>Verdadeiro ou falso? Prove. <strong>$log_2 n + 1 = Θ(log_{10} n)$</strong></p>',
@@ -1195,19 +1195,19 @@ window.EXERCICIOS = [
   e: '<p>Podemos estender a notação vista em sala para o caso de funções com dois parâmetros '
    + '$n$ e $m$ que tendem ao infinito em proporções independentes. Para uma dada função '
    + '$g(n,m)$, denotamos por $O(g(n,m))$ o conjunto de funções</p>'
-   + '<p style="padding-left:1rem">$O(g(n,m)) = \\{f(n,m)$ : existem constantes positivas '
+   + '<p style="padding-left:1rem">$O(g(n,m)) = {f(n,m)$ : existem constantes positivas '
    + '$c$, $n_0$ e $m_0$ tais que $0 ≤ f(n,m) ≤ c·g(n,m)$ para todo $n ≥ n_0$ ou '
-   + '$m ≥ m_0\\}$</p>'
+   + '$m ≥ m_0}$</p>'
    + '<p>Dê as definições correspondentes para $Ω(g(n,m))$ e $Θ(g(n,m))$.</p>',
   sol: [
     '<strong>$Ω(g(n,m))$.</strong> Inverta o sentido da desigualdade, mantendo a estrutura:',
-    '<p style="padding-left:1rem">$Ω(g(n,m)) = \\{f(n,m)$ : existem constantes positivas '
+    '<p style="padding-left:1rem">$Ω(g(n,m)) = {f(n,m)$ : existem constantes positivas '
     + '$c$, $n_0$ e $m_0$ tais que $0 ≤ c·g(n,m) ≤ f(n,m)$ para todo $n ≥ n_0$ ou '
-    + '$m ≥ m_0\\}$</p>',
+    + '$m ≥ m_0}$</p>',
     '<strong>$Θ(g(n,m))$.</strong> Combine as duas com constantes independentes:',
-    '<p style="padding-left:1rem">$Θ(g(n,m)) = \\{f(n,m)$ : existem constantes positivas '
+    '<p style="padding-left:1rem">$Θ(g(n,m)) = {f(n,m)$ : existem constantes positivas '
     + '$c_1$, $c_2$, $n_0$ e $m_0$ tais que '
-    + '$0 ≤ c_1·g(n,m) ≤ f(n,m) ≤ c_2·g(n,m)$ para todo $n ≥ n_0$ ou $m ≥ m_0\\}$</p>',
+    + '$0 ≤ c_1·g(n,m) ≤ f(n,m) ≤ c_2·g(n,m)$ para todo $n ≥ n_0$ ou $m ≥ m_0}$</p>',
     '<strong>O detalhe que o exercício testa: o "ou".</strong> A condição é '
     + '"$n ≥ n_0$ <em>ou</em> $m ≥ m_0$", não "e". Isso torna a exigência '
     + '<strong>mais forte</strong>: a desigualdade tem de valer sempre que <em>pelo menos um</em> '
@@ -1257,7 +1257,7 @@ window.EXERCICIOS = [
     'Tomando $c = L + 1$ (que é positivo, pois $L ≥ 0$) e esse $n_0$, a definição de $O$ está '
     + 'satisfeita. Logo $f(n) = O(g(n))$. ∎',
     '<strong>O que a recíproca não dá.</strong> $f = O(g)$ <em>não</em> implica que o limite '
-    + 'exista — ele pode oscilar. Exemplo: $f(n) = n(2 + sen\\, n)$ e $g(n) = n$; a razão '
+    + 'exista — ele pode oscilar. Exemplo: $f(n) = n(2 + sen n)$ e $g(n) = n$; a razão '
     + 'oscila entre 1 e 3, mas $f = O(g)$ com $c = 3$.',
     '<strong>Os outros dois casos</strong> (que o exercício não pede, mas completam o quadro): '
     + 'se o limite é $0$, então $f = o(g)$; se é $+∞$, então $f = ω(g)$.'
@@ -1487,9 +1487,9 @@ window.EXERCICIOS = [
   e: '<p><em>(Cormen 3.1-8)</em> Podemos estender nossa notação ao caso de dois parâmetros '
    + '$n$ e $m$ que podem tender a infinito independentemente, a taxas distintas. '
    + 'Dada $g(n,m)$, denotamos por $O(g(n,m))$ o conjunto</p>'
-   + '<p style="padding-left:1rem">$O(g(n,m)) = \\{f(n,m)$ : existem constantes positivas '
+   + '<p style="padding-left:1rem">$O(g(n,m)) = {f(n,m)$ : existem constantes positivas '
    + '$c$, $n_0$ e $m_0$ tais que $0 ≤ f(n,m) ≤ c·g(n,m)$ para todo $n ≥ n_0$ ou '
-   + '$m ≥ m_0\\}$</p>'
+   + '$m ≥ m_0}$</p>'
    + '<p>Dê as definições correspondentes para $Ω(g(n,m))$ e $Θ(g(n,m))$.</p>',
   sol: [
     'Este exercício é idêntico ao <strong>item 32</strong> desta lista. Ver lá a resposta '
@@ -2106,7 +2106,7 @@ window.EXERCICIOS = [
     + 'É por isso que, na prática, a verificação é rápida — mas o teorema precisa da cláusula '
     + 'para ser correto no caso geral.'
   ],
-  r: '$a = 1$, $b = 2$, $f(n) = n(2 − cos\\,n)$: cresce como $Θ(n)$ ✓, mas a oscilação impede '
+  r: '$a = 1$, $b = 2$, $f(n) = n(2 − cos n)$: cresce como $Θ(n)$ ✓, mas a oscilação impede '
    + 'qualquer $c < 1$.' },
 
 { id: 'L1-59', n: 59, s: 3, t: 'aberta', d: 3, p: 'baixa', g: ['teorema-mestre', 'prova'],
@@ -3224,7 +3224,7 @@ window.EXERCICIOS = [
     + '<span class="ln">  <span class="kw">return</span> C[b\'] − C[a\' − 1]</span></pre>',
     '<strong>Por que funciona.</strong> $C[b]$ conta os elementos $≤ b$ e $C[a−1]$ conta os '
     + '$≤ a−1$, ou seja $< a$. A diferença conta exatamente os que estão em $[a, b]$:'
-    + '$$\\#\\{j : a ≤ A[j] ≤ b\\} = C[b] − C[a−1]$$',
+    + '$$#{j : a ≤ A[j] ≤ b} = C[b] − C[a−1]$$',
     '<strong>Custo da consulta.</strong> Dois acessos a vetor e uma subtração: '
     + '$$Θ(1) ✓$$',
     '<strong>Espaço.</strong> $Θ(k)$ para o vetor $C$.',
@@ -3233,7 +3233,7 @@ window.EXERCICIOS = [
     + 'valor. Isso só é viável quando $k$ é comparável a $n$ — se $k$ fosse, digamos, $2^{32}$, '
     + 'o pré-processamento seria impraticável.'
   ],
-  r: 'Histograma + soma de prefixos: $C[i] = \\#\\{A[j] ≤ i\\}$ em $Θ(n+k)$. '
+  r: 'Histograma + soma de prefixos: $C[i] = #{A[j] ≤ i}$ em $Θ(n+k)$. '
    + 'Consulta: $C[b] − C[a−1]$ em $Θ(1)$.' },
 
 { id: 'L1-75', n: 75, s: 4, t: 'projeto', d: 3, p: 'media', g: ['pré-processamento', 'prefixos-2d'],
@@ -3249,7 +3249,7 @@ window.EXERCICIOS = [
     + 'aqui é de <em>posições</em>, e o valor $x$ é fixo na consulta. '
     + 'A solução é uma tabela de prefixos <strong>por valor</strong>.',
     '<strong>A estrutura.</strong> Defina uma matriz $P[1..10][0..n]$ onde'
-    + '$$P[v][p] = \\#\\{\\, q ≤ p : A[q] = v \\,\\}$$'
+    + '$$P[v][p] = #{q ≤ p : A[q] = v}$$'
     + 'isto é, quantas vezes o valor $v$ aparece no prefixo $A[1..p]$.',
     '<strong>Pré-processamento.</strong>'
     + '<pre class="pseudo"><span class="ln"><span class="fnn">PreProcessa</span>(A, n)</span>'
@@ -3271,7 +3271,7 @@ window.EXERCICIOS = [
     '<strong>Por que funciona.</strong> $P[x][j]$ conta as ocorrências de $x$ em $A[1..j]$, e '
     + '$P[x][i−1]$ conta as em $A[1..i−1]$. A diferença é o número de ocorrências em '
     + '$A[i..j]$:'
-    + '$$\\#\\{\\, q ∈ [i,j] : A[q] = x \\,\\} = P[x][j] − P[x][i−1]$$',
+    + '$$#{q ∈ [i,j] : A[q] = x} = P[x][j] − P[x][i−1]$$',
     '<strong>Custo da consulta:</strong> dois acessos e uma subtração — $$Θ(1) ✓$$',
     '<strong>Espaço:</strong> $Θ(10n) = Θ(n)$.',
     '<strong>Otimização possível.</strong> Em vez de 10 vetores de prefixos, pode-se guardar, '

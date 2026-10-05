@@ -140,7 +140,34 @@ window.TEORIA = (function () {
     tip('Consequência direta',
       '<p>$T(n) = T(n−1) + Θ(n) ⇒ T(n) = Θ(n^2)$ — a soma aritmética.<br>'
       + '$T(n) = T(n−1) + Θ(1) ⇒ T(n) = Θ(n)$.<br>'
-      + '$T(n) = T(n−1) + Θ(1/n) ⇒ T(n) = Θ(log n)$ — a harmônica, que fecha o Quick-sort médio.</p>')
+      + '$T(n) = T(n−1) + Θ(1/n) ⇒ T(n) = Θ(log n)$ — a harmônica, que fecha o Quick-sort médio.<br>'
+      + '$T(n) = T(n−1) + log n ⇒ T(n) = Θ(n log n)$ — e esta é a que caiu em 2025.2.</p>'),
+
+    '<h4>A soma de logaritmos — onde o fatorial encontra a recorrência</h4>',
+
+    '<p>A última linha acima merece a conta inteira, porque ela liga as duas metades desta '
+    + 'seção. Telescopando $T(n) = T(n−1) + log n$:</p>',
+    '$$T(n) = \\S{i=1}{n} log i$$',
+
+    '<p>E aqui entra a propriedade que resolve: <strong>soma de logaritmos é o logaritmo do '
+    + 'produto</strong>. O produto de todos os $i$ de 1 a $n$ é justamente $n!$:</p>',
+    '$$\\S{i=1}{n} log i = log\\p{\\P{i=1}{n} i} = log(n!) = Θ(n log n)$$',
+
+    def('O encadeamento, em três passos',
+      '<p><strong>1.</strong> Telescópica: $T(n) = T(n−1) + log n$ vira $\\S{i=1}{n} log i$.<br>'
+      + '<strong>2.</strong> $log a + log b = log(ab)$, aplicada $n$ vezes, vira $log(n!)$.<br>'
+      + '<strong>3.</strong> $lg(n!) = Θ(n lg n)$ — o resultado do começo desta seção.</p>'),
+
+    warn('Não caia no $Θ(log n)$',
+      '<p>O erro natural é olhar $T(n) = T(n−1) + log n$, ver "log" e responder $Θ(log n)$. '
+      + 'Mas há $n$ níveis de recursão, cada um custando um logaritmo — o custo total é '
+      + '$n$ logaritmos, não um. O mesmo raciocínio que faz $T(n−1) + Θ(1)$ dar $Θ(n)$ e não '
+      + '$Θ(1)$.</p>'),
+
+    exam('<p><strong>2025.2 Q2(C)</strong>. O enunciado descreve o algoritmo em prosa: '
+      + '"descarta-se um elemento da entrada… o tempo gasto para processar a entrada recebida é '
+      + 'logaritmo". O gabarito resolve exatamente por este caminho, e cita a propriedade da '
+      + 'soma de logaritmos nome por nome.</p>')
   ].join('') },
 
   { id: 'm0-inducao', titulo: 'Indução matemática', html: [
@@ -219,9 +246,11 @@ window.TEORIA = (function () {
     + 'O Problema da Parada é o exemplo canônico.</p>'
   ].join('') },
 
-  { id: 'm1-inv', titulo: 'Invariante de laço', html: [
-    exam('<p><strong>Questão 3, 2,0 pontos, todo semestre.</strong> É um template de três '
-      + 'parágrafos. Decorar a estrutura vale mais aqui do que em qualquer outro ponto da prova.</p>'),
+  {id: 'm1-inv', titulo: 'Invariante de laço', html: [
+    exam('<p><strong>Caiu em 1 das 3 provas</strong> — a Q3 de 2026.1, valendo 2,0 pts. '
+      + 'Frequência baixa, mas <em>custo de aprender quase zero</em>: é um template de três '
+      + 'parágrafos que você decora numa sentada. Mantenha no bolso, não gaste nele o tempo '
+      + 'que os temas de 3/3 merecem.</p>'),
 
     def('Invariante de laço',
       '<p>Uma afirmação sobre o estado do programa que é verdadeira no início de cada iteração '
@@ -437,7 +466,58 @@ window.TEORIA = (function () {
       '<p>"O tempo de execução do algoritmo A é no mínimo $O(n^2)$" não tem sentido — '
       + '$O$ já é um limite <em>superior</em>, então "no mínimo um limite superior" não '
       + 'restringe nada: toda função é $O$ de algo suficientemente grande. O certo seria '
-      + '$Ω(n^2)$. É o item 38 da lista (Cormen 3.1-3).</p>')
+      + '$Ω(n^2)$. É o item 38 da lista (Cormen 3.1-3).</p>'),
+
+    '<h4>O que a notação assintótica não diz</h4>',
+
+    '<p>Tudo acima compara <strong>taxas de crescimento</strong>, e por construção joga fora '
+    + 'constantes multiplicativas e termos de menor ordem. Isso é uma escolha deliberada: ela '
+    + 'torna a comparação independente de máquina e de linguagem. Mas tem um preço, e a prova '
+    + 'cobra exatamente o preço.</p>',
+
+    def('A pergunta que o assintótico não responde',
+      '<p>Dois programas resolvem o mesmo problema, com custos $f(n) = n + 5/n$ e '
+      + '$g(n) = 100\\r{n}$. Qual é mais rápido <strong>para a entrada que eu tenho</strong>?</p>'),
+
+    '<p>Assintoticamente não há dúvida: $f(n) = Θ(n)$ e $g(n) = Θ(\\r{n})$, então $g$ cresce '
+    + 'menos e o segundo programa "ganha". Mas essa conclusão vale para $n$ <em>suficientemente '
+    + 'grande</em> — e a definição nunca diz o quão grande. Aqui o cruzamento está longe:</p>',
+
+    tbl(['$n$', '$f(n) = n + 5/n$', '$g(n) = 100\\r{n}$', 'Mais rápido'], [
+      ['$10$', '$10{,}5$', '$≈ 316{,}2$', '<span class="pill ok">o de $Θ(n)$</span>'],
+      ['$1.000$', '$1000{,}005$', '$≈ 3.162{,}3$', '<span class="pill ok">o de $Θ(n)$</span>'],
+      ['$10.000$', '$10.000{,}0005$', '$10.000$', '<span class="pill warn">empatam</span>'],
+      ['$1.000.000$', '$≈ 10^6$', '$100.000$', '<span class="pill accent">o de $Θ(\\r{n})$</span>']
+    ], 'A constante 100 empurra o cruzamento até $n = 10.000$.'),
+
+    '<p>O ponto de cruzamento sai de $n = 100\\r{n}$, ou seja $\\r{n} = 100$, ou seja '
+    + '$n = 10.000$. Abaixo disso a constante decide; acima, a ordem decide.</p>',
+
+    steps([
+      '<strong>Reduza cada função a $Θ$.</strong> Serve para saber <em>quem acaba ganhando</em>, '
+      + 'e para organizar a resposta.',
+      '<strong>Veja se o enunciado fixa uma faixa de $n$.</strong> Se fixa, a resposta é '
+      + 'numérica, não assintótica.',
+      '<strong>Use monotonicidade.</strong> Se as duas funções são contínuas e crescentes, basta '
+      + 'comparar nos <em>extremos</em> da faixa — não é preciso testar valor por valor. É o '
+      + 'argumento que o gabarito usa.',
+      '<strong>Diga explicitamente que o assintótico ignora constantes.</strong> O gabarito dá '
+      + 'ponto por essa frase: é a justificativa de por que a resposta "óbvia" está errada.'
+    ]),
+
+    tip('O lado formal da mesma questão',
+      '<p>Vale $g(n) = O(f(n))$, porque $100\\r{n} ≤ c\\p{n + 5/n}$ para todo $n ≥ 1$ bastando '
+      + '$c ≥ 100/6$ (o pior caso é $n = 1$, onde $f(1) = 6$ e $g(1) = 100$).</p>'
+      + '<p>Mas $f(n) ≠ O(g(n))$: a razão $\\f{f(n)}{g(n)} = \\f{n^2 + 5}{100n\\r{n}}$ cresce '
+      + 'como $\\r{n}/100$, sem limite. Nenhuma constante $c$ segura isso para todo $n$ grande. '
+      + 'Então a relação é estrita — $g$ é assintoticamente melhor, e ainda assim mais lenta na '
+      + 'faixa pedida.</p>'),
+
+    exam('<p>Esta é a <strong>Q1 de 2025.2</strong>, 2,0 pts — a única questão puramente '
+      + 'conceitual das três provas. Ela não pede nenhuma conta difícil: pede que você saiba que '
+      + '<em>crescimento assintótico menor não é o mesmo que programa mais rápido</em>. '
+      + 'Se cair de novo, a resposta completa tem três partes: as duas ordens em $Θ$, a '
+      + 'comparação numérica na faixa dada, e a frase sobre constantes.</p>')
   ].join('') }
   ]
 },
@@ -448,9 +528,9 @@ window.TEORIA = (function () {
   num: '2',
   titulo: 'Fórmulas de recorrência',
   fonte: 'Slide 02 — "Fórmulas de recorrência e algoritmos recursivos"',
-  resumo: 'Quatro métodos de solução. A questão 1 da prova vale 2,0 pontos e é resolvida '
-        + 'inteiramente com eles — três dos quatro itens saem do Teorema Mestre em menos de '
-        + 'um minuto cada.',
+  resumo: 'Quatro métodos de solução. A questão de recorrências caiu nas três provas, valendo '
+        + '2,0 a 2,5 pontos, e é resolvida inteiramente com eles — a maioria dos itens sai do '
+        + 'Teorema Mestre em menos de um minuto cada, e o resto pede árvore de recursão.',
   secoes: [
 
   { id: 'm2-extrair', titulo: 'Extrair a recorrência do algoritmo', html: [
@@ -535,22 +615,63 @@ window.TEORIA = (function () {
 
     '<h4>Recorrências canônicas — vale reconhecer de olho</h4>',
     tbl(['Recorrência', 'Solução', 'De onde vem'], [
-      ['$T(n) = T(n/2) + Θ(1)$',    '$Θ(log n)$',    'Busca binária, potência inteira'],
-      ['$T(n) = T(n/2) + Θ(n)$',    '$Θ(n)$',        'Descartar metade, com trabalho linear'],
-      ['$T(n) = 2T(n/2) + Θ(1)$',   '$Θ(n)$',        'Q4 da prova de 2026.1 — máximo do vetor'],
-      ['$T(n) = 2T(n/2) + Θ(n)$',   '$Θ(n log n)$',  'Merge Sort'],
-      ['$T(n) = 4T(n/2) + Θ(n)$',   '$Θ(n^2)$',      'Item 67(a) da lista'],
-      ['$T(n) = 4T(n/2) + Θ(n^2)$', '$Θ(n^2 log n)$','Q1(a) da prova — caso 2'],
+      ['$T(n) = T(n/2) + Θ(1)$', '$Θ(log n)$', 'Busca binária, potência inteira'],
+      ['$T(n) = T(n/2) + Θ(n)$', '$Θ(n)$', 'Descartar metade, com trabalho linear'],
+      ['$T(n) = 2T(n/2) + Θ(1)$', '$Θ(n)$', '2026.1 Q4 (máximo do vetor) e 2025.2 Q3 (MaxDif); também o pior caso de 2025.1 Q3'],
+      ['$T(n) = 2T(n/2) + Θ(n)$', '$Θ(n log n)$', 'Merge Sort; 2025.2 Q4 (majoritário); 2025.1 Q5 (maior soma)'],
+      ['$T(n) = 2T(n/4) + \\r{n}$', '$Θ(\\r{n} log n)$', '2025.1 Q1(a) — caso 2 com $f(n) = \\r{n}$'],
+      ['$T(n) = 4T(n/2) + Θ(n)$', '$Θ(n^2)$', 'Item 67(a) da lista'],
+      ['$T(n) = 4T(n/2) + Θ(n^2)$', '$Θ(n^2 log n)$','2026.1 Q1(a) — caso 2'],
+      ['$T(n) = 16T(n/4) + Θ(n)$', '$Θ(n^2)$', '2025.2 Q2(A) — caso 1, pois $n^{log_4 16} = n^2$'],
       ['$T(n) = 7T(n/2) + Θ(n^2)$', '$Θ(n^{lg 7})$', 'Strassen'],
-      ['$T(n) = T(n−1) + Θ(1)$',    '$Θ(n)$',        'Recursão linear simples'],
-      ['$T(n) = T(n−1) + Θ(n)$',    '$Θ(n^2)$',      'Pior caso do Quick-sort'],
-      ['$T(n) = 2T(n−1) + Θ(1)$',   '$Θ(2^n)$',      'Torres de Hanói'],
-      ['$T(n) = 2T(n−1) + Θ(n)$',   '$Θ(2^n)$',      'Q1(d) da prova de 2026.1'],
+      ['$T(n) = T(n−1) + Θ(1)$', '$Θ(n)$', 'Recursão linear simples'],
+      ['$T(n) = T(n−1) + Θ(n)$', '$Θ(n^2)$', 'Pior caso do Quick-sort'],
+      ['$T(n) = T(n−1) + log n$', '$Θ(n log n)$', '2025.2 Q2(C) — soma de logaritmos, $= Θ(log n!)$'],
+      ['$T(n) = 2T(n−1) + Θ(1)$', '$Θ(2^n)$', 'Torres de Hanói; 2025.2 Q2(B); 2025.1 Q1(b)'],
+      ['$T(n) = 2T(n−1) + Θ(n)$', '$Θ(2^n)$', '2026.1 Q1(d)'],
       ['$T(n) = T(\\r{n}) + Θ(1)$', '$Θ(log log n)$','Item 64(j) da lista']
-    ], 'Doze linhas que cobrem quase toda a questão 1 de qualquer semestre.')
+    ], 'Catorze linhas que cobrem a questão de recorrências das três provas — ela caiu em 3/3.'),
+
+    '<h4>Da prosa à recorrência</h4>',
+
+    '<p>Em 2025.2 a questão de recorrências <strong>não trouxe pseudocódigo</strong>: descreveu '
+    + 'três algoritmos em português e pediu as recorrências. A nota vinha inteira da tradução. '
+    + 'Vale ter o dicionário na ponta da língua.</p>',
+
+    tbl(['O que o enunciado diz', 'O que vai na recorrência'], [
+      ['"divide-se o problema em $a$ sub-problemas"', 'o coeficiente $a$'],
+      ['"com entradas $b$ vezes menores"', '$T(n/b)$'],
+      ['"cada uma com um elemento a menos"', '$T(n−1)$ — é <strong>subtrativa</strong>, Teorema Mestre não vale'],
+      ['"descarta-se um elemento e os restantes são tratados na próxima chamada"', 'uma única chamada $T(n−1)$'],
+      ['"as soluções são combinadas em tempo linear"', '$+ Θ(n)$'],
+      ['"o tempo para combinar é constante"', '$+ Θ(1)$'],
+      ['"o tempo para processar a entrada é logarítmico"', '$+ log n$'],
+      ['"o problema é dividido pela metade"', '$T(n/2)$, com $a = 1$ se há só uma chamada'],
+      ['"a cada chamada o expoente cai pela metade"', '$T(n/2)$ — mas $n$ aqui é o expoente, não o vetor']
+    ], 'O enunciado de 2025.2 Q2 é literalmente uma concatenação destas frases.'),
+
+    '<p>Aplicando às três descrições daquela prova:</p>',
+
+    tbl(['Algoritmo', 'Descrição', 'Recorrência', 'Solução'], [
+      ['A', '16 sub-problemas 4× menores, combinados em tempo linear',
+       '$16T(n/4) + n$', '$Θ(n^2)$ — caso 1'],
+      ['B', '2 sub-problemas com um elemento a menos, combinação constante',
+       '$2T(n−1) + 1$', '$Θ(2^n)$ — árvore'],
+      ['C', 'descarta um elemento, processa o resto em tempo logarítmico',
+       '$T(n−1) + log n$', '$Θ(n log n)$ — soma de logs']
+    ]),
+
+    warn('O erro que a questão caça',
+      '<p>Ler "um elemento a menos" e escrever $T(n/2)$ por força do hábito. A diferença entre '
+      + '$2T(n−1)$ e $2T(n/2)$ é a diferença entre $Θ(2^n)$ e $Θ(n)$ — não é um detalhe. '
+      + 'Sempre pergunte: o tamanho da entrada é <em>dividido</em> ou é <em>decrementado</em>?</p>'),
+
+    exam('<p><strong>2025.2 Q2</strong>, 2,5 pts. É a maior questão de recorrências das três '
+      + 'provas, e a única sem código. Treine lendo os enunciados dos itens de projeto da '
+      + 'Lista 1 e escrevendo só a recorrência, sem resolver o problema.</p>')
   ].join('') },
 
-  { id: 'm2-subst', titulo: 'Método 1 — Substituição', html: [
+  {id: 'm2-subst', titulo: 'Método 1 — Substituição', html: [
     '<p>Dois passos: <strong>adivinhar</strong> a forma da solução e <strong>provar por '
     + 'indução</strong>, encontrando as constantes $c$ e $n_0$ que satisfazem a definição '
     + 'de $O$ ou $Ω$.</p>',
@@ -658,10 +779,12 @@ window.TEORIA = (function () {
       + '<p>É o item 20(b) da lista: $T(n) = 2T(n−2) + 1$ não pode ser limitado por polinômio.</p>')
   ].join('') },
 
-  { id: 'm2-mestre', titulo: 'Método 3 — Teorema Mestre', html: [
-    exam('<p><strong>O item mais rentável de toda a prova.</strong> Em 2026.1, três dos quatro '
-      + 'itens da questão 1 saíram direto daqui. São 1,5 ponto em poucos minutos, desde que '
-      + 'o procedimento esteja automatizado.</p>'),
+  {id: 'm2-mestre', titulo: 'Método 3 — Teorema Mestre', html: [
+    exam('<p><strong>O item mais rentável de toda a prova.</strong> A questão de recorrências '
+      + 'caiu nas <strong>três</strong> provas (2025.1 Q1, 2025.2 Q2, 2026.1 Q1), valendo 2,0 a '
+      + '2,5 pts, e a maioria dos itens sai direto daqui: em 2026.1 foram três dos quatro. '
+      + 'São uns 1,5 ponto em poucos minutos, desde que o procedimento esteja automatizado — '
+      + 'o resto da questão pede árvore de recursão.</p>'),
 
     def('A forma padrão',
       '$$T(n) = a·T(n/b) + f(n), \\t{ com } a ≥ 1 \\t{ e } b > 1$$'
@@ -798,9 +921,10 @@ window.TEORIA = (function () {
   num: '3',
   titulo: 'Divisão e conquista',
   fonte: 'Slide 03 — "Estratégia: divisão e conquista"',
-  resumo: 'Metade da prova vem daqui: ler uma recursiva (Q4), projetar uma (Q5) e enriquecer '
-        + 'o retorno para combinar em tempo constante (Q6). A última seção reúne o repertório '
-        + 'de decomposições que essas questões cobram.',
+  resumo: 'Metade da prova vem daqui, nas três provas: ler uma recursiva e extrair a '
+        + 'recorrência, projetar uma do zero, e enriquecer o retorno para combinar em tempo '
+        + 'constante. A última seção reúne os seis padrões de decomposição que cobrem as sete '
+        + 'questões de projeto já cobradas.',
   secoes: [
 
   { id: 'm3-fases', titulo: 'As três fases', html: [
@@ -834,6 +958,57 @@ window.TEORIA = (function () {
       + 'Escrever $x^{n/2} · x^{n/2}$ como duas chamadas recursivas dá '
       + '$T(n) = 2T(n/2) + Θ(1) = Θ(n)$ — e joga fora todo o ganho. '
       + 'Guardar o resultado numa variável é o algoritmo inteiro.</p>'),
+
+    '<h4>A variante que já caiu: potência modular</h4>',
+
+    '<p>A prova de 2025.1 pediu $x^n mod k$ em $Θ(log n)$ — mesma recursão, com uma torção. '
+    + 'O enunciado dá a identidade de graça:</p>',
+
+    def('A identidade do enunciado',
+      '<p>Se $x$, $y$ e $k > 0$ são inteiros, então</p>'
+      + '$$(xy) mod k = [(x mod k)(y mod k)] mod k$$'
+      + '<p>Em palavras: dá no mesmo tirar o resto <em>antes</em> ou <em>depois</em> de '
+      + 'multiplicar.</p>'),
+
+    '<p>É isso que permite aplicar o $mod$ <strong>dentro</strong> da recursão. Sem a '
+    + 'identidade você calcularia $x^n$ inteiro — um número com $Θ(n log x)$ dígitos, que '
+    + 'estoura qualquer inteiro de máquina — e só então tiraria o resto. Com ela, todo valor '
+    + 'intermediário fica abaixo de $k^2$.</p>',
+
+    '<pre class="pseudo"><span class="ln"><span class="hd">1</span> <span class="kw">Function</span> <span class="fnn">pm</span>(x, n, k):</span>'
+    + '<span class="ln"><span class="hd">2</span> <span class="kw">if</span> k = 1 <span class="kw">then return</span> 0</span>'
+    + '<span class="ln"><span class="hd">3</span> <span class="kw">if</span> n = 0 <span class="kw">then return</span> 1</span>'
+    + '<span class="ln"><span class="hd">4</span> <span class="kw">if</span> n <span class="kw">mod</span> 2 = 1 <span class="kw">then</span></span>'
+    + '<span class="ln"><span class="hd">5</span>   r ← <span class="fnn">pm</span>(x, (n − 1)/2, k)</span>'
+    + '<span class="ln"><span class="hd">6</span>   s ← x <span class="kw">mod</span> k</span>'
+    + '<span class="ln"><span class="hd">7</span> <span class="kw">else</span></span>'
+    + '<span class="ln"><span class="hd">8</span>   r ← <span class="fnn">pm</span>(x, n/2, k)</span>'
+    + '<span class="ln"><span class="hd">9</span>   s ← 1</span>'
+    + '<span class="ln"><span class="hd">10</span> <span class="kw">return</span> (r² × s) <span class="kw">mod</span> k</span></pre>',
+
+    '<p>A recorrência é idêntica à da potência comum — uma chamada, metade do expoente, '
+    + 'trabalho local constante:</p>',
+    '$$T(n) = T(n/2) + Θ(1) ⇒ T(n) = Θ(log n)$$',
+
+    tbl(['Linha', 'Por que existe'], [
+      ['2 — $k = 1$ devolve 0', 'Qualquer inteiro módulo 1 é 0. O enunciado não pede, mas o gabarito inclui'],
+      ['3 — $n = 0$ devolve 1', '$x^0 = 1$. É o caso base da recursão no expoente'],
+      ['5–6 — expoente ímpar', 'Sobra um fator $x$: guarda-se $s = x mod k$ para multiplicar no fim'],
+      ['8–9 — expoente par', 'Não sobra fator, então $s = 1$ (elemento neutro)'],
+      ['10 — $(r^2 × s) mod k$', 'Uma única redução modular no retorno, válida pela identidade do enunciado']
+    ]),
+
+    warn('A recorrência é no expoente',
+      '<p>O "tamanho da entrada" aqui é $n$, o <strong>expoente</strong> — não o vetor, não o '
+      + 'número de bits, não $x$ nem $k$. É $n$ que cai pela metade a cada chamada, e é por isso '
+      + 'que $T(n) = T(n/2) + Θ(1)$. Dizer isso explicitamente faz parte da resposta: o '
+      + 'enunciado de 2025.1 pede o $Θ(log n)$ "fato que você deve mostrar através da '
+      + 'recorrência a ela associada".</p>'),
+
+    exam('<p><strong>2025.1 Q4</strong>, 3,0 pts — a questão mais pesada daquela prova. O '
+      + 'gabarito observa que "este problema é muito similar ao cálculo da $n$-ésima potência '
+      + 'de um número, visto em sala": se você sabe a potência inteira acima, já sabe 90% '
+      + 'desta. O outro 10% é lembrar de reduzir módulo $k$ no retorno.</p>'),
 
     '<h4>N-ésimo termo de Fibonacci</h4>',
     '$$F(n) = \\c{F(n−1) + F(n−2)}{se n ≥ 2}{n}{se n < 2}$$',
@@ -1051,10 +1226,26 @@ window.TEORIA = (function () {
       + 'Quick-sort, não o pior. Se a questão pedir o pior caso, a resposta é $Θ(n^2)$.</p>')
   ].join('') },
 
-  { id: 'm3-repertorio', titulo: 'Repertório de decomposições (Q5 e Q6)', html: [
-    '<p>As questões 5 e 6 pedem que você <em>invente</em> um algoritmo. Não há receita — '
-    + 'mas há um repertório pequeno de padrões, e quase todo enunciado de prova cai em um '
-    + 'deles. Aprender a reconhecer qual é metade do trabalho.</p>',
+  {id: 'm3-repertorio', titulo: 'Repertório de decomposições (as questões de projeto)', html: [
+    '<p>Toda prova traz ao menos uma questão pedindo que você <em>invente</em> um algoritmo — '
+    + 'caiu em <strong>3 de 3</strong>, e duas delas trouxeram duas. Não há receita, mas há um '
+    + 'repertório pequeno de padrões, e todo enunciado das três provas caiu em um deles. '
+    + 'Aprender a reconhecer qual é metade do trabalho.</p>',
+
+    tbl(['Padrão', 'Recorrência típica', 'Onde já caiu'], [
+      ['1 — Descartar metade com informação local', '$T(n/2) + Θ(1) = Θ(log n)$',
+       '2026.1 Q5 (unimodal) · 2025.1 Q3 (melhor caso)'],
+      ['2 — Retorno enriquecido', '$2T(n/2) + Θ(1) = Θ(n)$',
+       '<strong>2025.2 Q3 e 2026.1 Q6</strong> — o mesmo problema, duas vezes'],
+      ['3 — Reduzir o número de subproblemas', '$7T(n/2) + Θ(n^2)$',
+       'Strassen e Karatsuba (slide 03)'],
+      ['4 — Combinar com trabalho linear', '$2T(n/2) + Θ(n) = Θ(n log n)$',
+       '2025.1 Q5 (maior soma) · par de pontos'],
+      ['5 — Contar para validar um candidato', '$2T(n/2) + Θ(n) = Θ(n log n)$',
+       '2025.2 Q4 (majoritário)'],
+      ['6 — Dividir o expoente, não a entrada', '$T(n/2) + Θ(1) = Θ(log n)$',
+       '2025.1 Q4 ($x^n mod k$)']
+    ], 'Seis padrões cobrem as sete questões de projeto das três provas.'),
 
     '<h4>Padrão 1 — Descartar metade com informação local</h4>',
     def('Quando aplicar',
@@ -1091,6 +1282,10 @@ window.TEORIA = (function () {
       + 'em $Θ(1)$. Recorrência $T(n) = 2T(n/2) + Θ(1) ⇒ Θ(n)$.</p>'),
     '<p><strong>O caso da Q6 de 2026.1: maior diferença.</strong> Dado $A$ com $n$ valores, '
     + 'achar índices $i ≤ j$ que maximizem $A[j] − A[i]$.</p>',
+    exam('<p><strong>Este é o problema mais repetido do acervo.</strong> Caiu na Q3 de 2025.2 '
+      + '(2,5 pts, pedindo que você <em>analise</em> o pseudocódigo pronto) e na Q6 de 2026.1 '
+      + '(1,0 pt extra, pedindo que você <em>projete</em>). Mesmo problema, mesma tripla, dois '
+      + 'ângulos. Se houver um algoritmo para saber de cor, é este.</p>'),
     '<p>Dividindo em Esquerda e Direita, a maior diferença está inteiramente em E, '
     + 'inteiramente em D, ou cruza ($i ∈ E$, $j ∈ D$). O caso que cruza é '
     + '$max(D) − min(E)$ — calculável em $Θ(1)$ <em>se</em> cada chamada já devolver o '
@@ -1134,9 +1329,15 @@ window.TEORIA = (function () {
     + '$y$, cada ponto precisa ser comparado com no máximo 7 vizinhos. '
     + 'Combinação em $O(n)$, logo $T(n) = 2T(n/2) + O(n) = O(n log n)$.</p>',
 
-    '<h4>Padrão 5 — Contagem com descarte (elemento majoritário)</h4>',
+    '<h4>Padrão 5 — Contar para validar um candidato (elemento majoritário)</h4>',
     '<p>Existe um elemento que aparece em mais da metade das posições? '
-    + 'Aparece nos exercícios do slide 03 (item 5) e na Lista 1 (item 76).</p>',
+    + 'Aparece nos exercícios do slide 03 (item 5), na Lista 1 (item 76) e — valendo '
+    + '<strong>3,0 pts</strong> — na Q4 de 2025.2.</p>',
+    def('A forma do padrão',
+      '<p>A recursão <strong>não resolve</strong> o problema: ela só produz '
+      + '<em>candidatos</em>. A validação é uma varredura linear separada. Reconhecer isso é o '
+      + 'que destrava o enunciado — quem tenta fazer a recursão já devolver a resposta certa '
+      + 'não fecha o algoritmo.</p>'),
     '<p><strong>Por divisão e conquista, $O(n log n)$:</strong> um majoritário de $V$ tem de '
     + 'ser majoritário de ao menos uma das metades. Resolva as duas, obtendo no máximo dois '
     + 'candidatos, e verifique cada um com uma varredura $O(n)$. '
@@ -1152,7 +1353,28 @@ window.TEORIA = (function () {
       + 'Sim — Boyer–Moore, acima, sem memória extra e sem ordenar, exatamente como o '
       + 'enunciado exige. E o item 76(b) da lista pergunta o que muda se os elementos só '
       + 'admitirem teste de igualdade: nada, porque Boyer–Moore nunca compara por ordem, '
-      + 'apenas por igualdade.</p>')
+      + 'apenas por igualdade.</p>'),
+    exam('<p><strong>2025.2 Q4</strong>, 3,0 pts. O enunciado pede explicitamente '
+      + '"sem usar ordenação, mas usando divisão e conquista", com teto $O(n log n)$ — '
+      + 'ou seja, pede a versão por D&amp;C, não Boyer–Moore. E entrega a dica: "se há '
+      + 'proposta majoritária em $X$, ela deve ser majoritária em ao menos uma das metades". '
+      + 'Saiba as duas, mas entregue a que o enunciado pediu.</p>'),
+
+    '<h4>Padrão 6 — Dividir o expoente, não a entrada</h4>',
+    def('Quando aplicar',
+      '<p>Quando o "tamanho" do problema não é uma coleção, e sim um <strong>número</strong> — '
+      + 'um expoente, um contador, um alcance. A recursão cai pela metade sobre esse número, '
+      + 'e não sobre um vetor. Recorrência $T(n) = T(n/2) + Θ(1) ⇒ Θ(log n)$.</p>'),
+    '<p>É o padrão da potência inteira $x^n$ e da sua variante modular '
+    + '$x^n mod k$, que valeu <strong>3,0 pts na Q4 de 2025.1</strong>. '
+    + 'A derivação completa, com o pseudocódigo do gabarito e a identidade '
+    + '$(xy) mod k = [(x mod k)(y mod k)] mod k$, está na seção '
+    + '<a href="#m3-pot">Potência inteira e Fibonacci</a>.</p>',
+    warn('O erro de contagem',
+      '<p>Aqui é fácil errar <em>em que variável</em> está a recorrência. Em $x^n mod k$ o '
+      + 'parâmetro que diminui é $n$, o expoente — não $x$, não $k$, não um número de '
+      + 'elementos. Dizer isso explicitamente é parte da resposta, porque é o que justifica '
+      + 'o $log n$.</p>')
   ].join('') }
   ]
 }

@@ -434,18 +434,30 @@ window.AG = (function () {
              feitos: ok + partial + bad };
   }
 
+  /* Pontuação máxima de uma prova. Não é constante: 2026.1 vale 11,0,
+     2025.2 vale 10,0 e 2025.1 vale 11,5. */
+  function maxScore(sim) {
+    var t = 0;
+    (sim.questoes || []).forEach(function (q) { t += (q.pts || 0); });
+    return Math.round(t * 10) / 10;
+  }
+
+  /* O "melhor" simulado é o de maior APROVEITAMENTO, não de maior nota bruta —
+     comparar 8/10 com 9/11,5 pela nota crua daria o resultado errado. */
   function simStats() {
     var all = (window.SIMULADOS || []);
-    var s = load(), done = 0, best = null;
+    var s = load(), done = 0, best = null, bestMax = null, bestFrac = -1;
     all.forEach(function (sim) {
       var r = s.sim[sim.id];
       if (r && r.finished) {
         done++;
         var t = totalScore(sim, r);
-        if (best === null || t > best) best = t;
+        var mx = maxScore(sim);
+        var frac = mx > 0 ? t / mx : 0;
+        if (frac > bestFrac) { bestFrac = frac; best = t; bestMax = mx; }
       }
     });
-    return { total: all.length, feitos: done, melhor: best };
+    return { total: all.length, feitos: done, melhor: best, melhorMax: bestMax };
   }
 
   function totalScore(sim, r) {
@@ -467,6 +479,7 @@ window.AG = (function () {
     esc: esc, el: el, $: $, $$: $$, shuffle: shuffle, pct: pct, diff: diff,
     mt: mt, m: m, eqn: eqn, tex: tex, pseudo: pseudo,
     toast: toast, exportJSON: exportJSON, resetAll: resetAll,
-    cardStats: cardStats, exStats: exStats, simStats: simStats, totalScore: totalScore
+    cardStats: cardStats, exStats: exStats, simStats: simStats,
+    totalScore: totalScore, maxScore: maxScore
   };
 })();

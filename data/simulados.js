@@ -1,17 +1,28 @@
 /* ==========================================================================
-   simulados.js — três provas no molde da Avaliação 01.
+   simulados.js — cinco provas: as três Avaliação 1 reais + duas autorais.
 
-   Simulado 1 = a prova de 2026.1, transcrita do PDF, com o gabarito oficial.
-   Simulados 2 e 3 = autorais, mesma estrutura e distribuição de pontos,
-                     com gabarito passo a passo.
+   ORDEM DO ARRAY = ordem de exibição (as reais primeiro):
+     S1  Prova 1 de 2026.1   — oficial, transcrita do PDF com gabarito
+     S4  Prova 1 de 2025.2   — oficial, transcrita do PDF com gabarito
+     S5  Prova 1 de 2025.1   — oficial, transcrita do PDF com gabarito
+     S2  Simulado autoral A  — no molde de 2026.1
+     S3  Simulado autoral B  — itens mais difíceis
 
-   Estrutura da avaliação (10,0 + 1,0 extra):
-     Q1 2,0  quatro recorrências
-     Q2 2,0  complexidade de laços aninhados
-     Q3 2,0  invariante de laço
-     Q4 2,0  ler função recursiva de D&C
-     Q5 2,0  projetar algoritmo de D&C
-     Q6 1,0  D&C com retorno enriquecido (extra)
+   Os ids NÃO seguem a ordem de exibição de propósito: o progresso vive no
+   localStorage sob sim.S2/sim.S3 e respostas por S2Q1…, então renumerar
+   faria as respostas das autorais reaparecerem anexadas à prova errada.
+   Para mudar a ordem na tela, reordene o array — nunca os ids.
+
+   A estrutura da prova NÃO é fixa entre semestres:
+     2026.1  6 questões · 2 / 2 / 2 / 2 / 2 / 1 extra   = 11,0
+     2025.2  4 questões · 2 / 2,5 / 2,5 / 3             = 10,0
+     2025.1  5 questões · 2 / 2 / 3 / 3 / 1,5 opcional  = 11,5 (teto de 10)
+
+   O que repete nas três (ver a Anatomia em index.html):
+     · resolver recorrências dadas (Teorema Mestre + árvore)      3/3
+     · analisar pseudocódigo e extrair a recorrência              3/3
+     · projetar um algoritmo de divisão e conquista               3/3
+     · laços aninhados → somatório                                2/3
    ========================================================================== */
 
 window.SIMULADOS = [
@@ -185,14 +196,418 @@ window.SIMULADOS = [
   ]
 },
 
+/* ═════════════════════════════════════ SIMULADO 4 — a prova de 2025.2 ═════ */
+/* Ordem de exibição: entra aqui, logo depois de S1, porque é prova real.
+   O id continua S4 para não embaralhar o progresso já salvo em S2/S3.      */
+{
+  id: 'S4',
+  nome: 'Prova 1 de 2025.2',
+  origem: 'Avaliação 1 · 23/10/2025 · Prof. George Lima',
+  oficial: true,
+  minutos: 100,
+  resumo: 'Quatro questões, 10,0 pts, sem ponto extra. É a prova mais conceitual das três: '
+        + 'abre cobrando o que a notação assintótica NÃO diz e pede três recorrências a partir '
+        + 'de enunciado em prosa, sem pseudocódigo.',
+  questoes: [
+
+  {id: 'S4Q1', n: 1, pts: 2, tema: 'Assintótico em n pequeno',
+    e: '<p>Há dois programas, $F$ e $G$, que resolvem o mesmo problema. Sabe-se que '
+     + '$f(n) = n + 5/n$ e $g(n) = 100\\r{n}$ representam os custos de execução de $F$ e $G$, '
+     + 'respectivamente, com entradas de tamanho $n > 0$.</p>'
+     + '<p>Para cada cenário abaixo, entre $F$ e $G$, escolha aquele com o '
+     + '<strong>melhor desempenho</strong>. Use seus conhecimentos sobre notação assintótica '
+     + 'para justificar sua resposta.</p>'
+     + '<p>(a) Sabendo que o tamanho da entrada $n ≤ 1.000$.<br>'
+     + '(b) Valores considerados de $n$ são maiores que $10.000$.</p>',
+    gab: [
+      'É fácil de ver que $f(n) = Θ(n)$ e $g(n) = Θ(\\r{n})$. Desta forma, se compararmos os '
+      + '<em>algoritmos</em>, percebe-se que a segunda expressa crescimento menor que a primeira.',
+      '<strong>Mas o ponto da questão é outro.</strong> Para comparar os <em>programas</em> '
+      + '$F$ e $G$, devemos levar em consideração as <strong>constantes e termos de menor '
+      + 'ordem</strong> presentes nestas funções — exatamente o que a notação assintótica ignora.',
+      '<strong>(a) $n ≤ 1.000$.</strong> Ambas as funções são contínuas e crescentes em $n$. '
+      + 'Então o máximo de ambas é para $n = 1.000$. Neste caso '
+      + '$$f(1000) = 1000{,}005 \\qquad g(1000) = 100\\r{1000} = 1000\\r{10} ≈ 3162{,}3$$'
+      + 'Como $f$ é menor em toda a faixa, a melhor escolha é o programa $F$.',
+      '<strong>(b) $n > 10.000$.</strong> No intervalo considerado, o mínimo das duas funções '
+      + 'não é inferior àqueles obtidos para $n = 10.000$. Tais valores são '
+      + '$$f(10000) > 10.000 \\qquad g(10000) = 100 × 100 = 10.000$$'
+      + 'Como as funções são contínuas e crescentes, a melhor escolha será o programa $G$.',
+      '<strong>A parte formal.</strong> De fato, sabe-se que $g(n) = O(f(n))$, mas '
+      + '$f(n) ≠ O(g(n))$. Para a primeira afirmação, note que'
+      + '$$100\\r{n} ≤ c\\p{n + 5/n}$$'
+      + 'para qualquer $c ≥ 100/6$ e para todo $n ≥ 1$.',
+      'Para a segunda, não existe constante positiva $c$ que faça'
+      + '$$100\\r{n} ≥ c\\p{n + 5/n} ⇔ c ≤ \\f{100\\r{n} · n}{n^2 + 5}$$'
+      + 'a partir de algum valor de $n$ — o lado direito tende a zero, então nenhum $c > 0$ '
+      + 'serve para todo $n$ grande.',
+      '<strong>A lição.</strong> Crescimento assintótico menor não quer dizer programa mais '
+      + 'rápido na faixa de entrada que você tem. $Θ(\\r{n})$ com constante 100 só vence '
+      + '$Θ(n)$ a partir de $n = 10.000$.'
+    ] },
+
+  {id: 'S4Q2', n: 2, pts: 2.5, tema: 'Da prosa à recorrência',
+    e: '<p>Há três algoritmos recursivos para resolver um determinado problema, cuja entrada '
+     + 'é uma sequência com $n$ elementos.</p>'
+     + '<p>Na solução <strong>A</strong>, a cada chamada da recursão, divide-se o problema em '
+     + '16 sub-problemas com entradas quatro vezes menores que a recebida. As 16 soluções são '
+     + 'combinadas em tempo linear.</p>'
+     + '<p>O algoritmo <strong>B</strong>, por sua vez, divide o problema em apenas dois a '
+     + 'cada etapa recursiva. Cada uma delas possui um elemento a menos em relação à sequência '
+     + 'recebida. O tempo para combinar os seus resultados é constante.</p>'
+     + '<p>Na solução <strong>C</strong>, descarta-se um elemento da entrada e os elementos '
+     + 'restantes são tratados na próxima chamada recursiva. O tempo gasto para processar a '
+     + 'entrada recebida é logarítmico.</p>'
+     + '<p>(a) Expresse as recorrências associadas a cada um dos algoritmos.<br>'
+     + '(b) Encontre o tempo de execução de cada um desses algoritmos, expressando-os em '
+     + 'notação assintótica $Θ$.</p>',
+    gab: [
+      '<strong>(a) As três recorrências.</strong> Cada frase do enunciado vira um termo:'
+      + '$$T_A(n) = 16 T_A(n/4) + n$$'
+      + '$$T_B(n) = 2 T_B(n − 1) + 1$$'
+      + '$$T_C(n) = T_C(n − 1) + log n$$',
+      '<strong>(b) $T_A$ — Teorema Mestre.</strong> Com $a = 16$, $b = 4$ e $f(n) = n$, temos '
+      + '$n^{log_b a} = n^{log_4 16} = n^2$. Como $f(n) = n$ é polinomialmente <em>menor</em> '
+      + 'que $n^2$, recai no <strong>Caso 1</strong>:'
+      + '$$T_A(n) = Θ(n^2)$$',
+      '<strong>(b) $T_B$ — árvore de recursão.</strong> É subtrativa, o Teorema Mestre não se '
+      + 'aplica. A árvore tem altura $n$, o nível $i$ tem $2^{i−1}$ nós e cada nó custa 1:'
+      + '$$T_B(n) = \\S{i=1}{n} 2^{i−1} = 2^n − 1 = Θ(2^n)$$',
+      '<strong>(b) $T_C$ — soma de logaritmos.</strong> A árvore de recursão é um caminho: a '
+      + 'raiz custa $log n$, o segundo nível $log(n−1)$, e assim sucessivamente. Sabe-se que a '
+      + 'soma de logaritmos é o logaritmo do produto, ou seja'
+      + '$$T_C(n) = \\S{i=1}{n} log i = log\\p{\\P{i=1}{n} i} = log(n!) = Θ(log n!) = Θ(n log n)$$',
+      '<strong>O que a questão treina.</strong> Não há pseudocódigo: a nota vem de traduzir '
+      + 'português para recorrência. "Divide em $a$ sub-problemas $b$ vezes menores" é '
+      + '$aT(n/b)$; "com um elemento a menos" é $aT(n−1)$; "combinadas em tempo linear" é '
+      + '$+ n$; "tempo constante" é $+ Θ(1)$.'
+    ] },
+
+  {id: 'S4Q3', n: 3, pts: 2.5, tema: 'Analisar dois pseudocódigos',
+    e: '<p>Dada uma sequência $X$ contendo $n$ valores numéricos, deseja-se encontrar</p>'
+     + '$$MaxDif(X) = max_{1 ≤ i < j ≤ n} (X[j] − X[i])$$'
+     + '<p>Por exemplo, para $X = [100, −2, 4, 1, 10, 4]$, a solução é 12, pois '
+     + '$10 − (−2) = 12$ é a diferença máxima.</p>'
+     + '<p>Analise as soluções dadas pelas funções abaixo, assumindo que '
+     + '<code>MaxDifA(X)</code> e <code>MaxDifB(X, 1, n)</code> são as chamadas iniciais. '
+     + 'Forneça as complexidades de tempo de execução em notação $Θ$. Note que '
+     + '<code>MaxDifB</code> retorna uma <strong>tripla</strong>, contendo respectivamente os '
+     + 'valores observados de mínimo, de máximo e a máxima diferença sendo buscada.</p>'
+     + '<pre class="pseudo"><span class="ln"><span class="kw">Function</span> <span class="fnn">MaxDifA</span>(X)</span>'
+     + '<span class="ln">  m ← −∞</span>'
+     + '<span class="ln">  n ← |X|</span>'
+     + '<span class="ln">  <span class="kw">for</span> i ← 1, …, n − 1 <span class="kw">do</span></span>'
+     + '<span class="ln">    <span class="kw">for</span> j ← i + 1, …, n <span class="kw">do</span></span>'
+     + '<span class="ln">      <span class="kw">if</span> m &lt; X[j] − X[i] <span class="kw">then</span></span>'
+     + '<span class="ln">        m ← X[j] − X[i]</span>'
+     + '<span class="ln">  <span class="kw">return</span> m</span></pre>'
+     + '<pre class="pseudo"><span class="ln"><span class="kw">Function</span> <span class="fnn">MaxDifB</span>(X, a, b)</span>'
+     + '<span class="ln">  <span class="kw">if</span> a = b <span class="kw">then</span></span>'
+     + '<span class="ln">    <span class="kw">return</span> (X[a], X[a], −∞)   <span class="cm">// (min, max, dif)</span></span>'
+     + '<span class="ln">  i ← ⌊(a+b)/2⌋</span>'
+     + '<span class="ln">  (minl, maxl, difl) ← <span class="fnn">MaxDifB</span>(X, a, i)</span>'
+     + '<span class="ln">  (minr, maxr, difr) ← <span class="fnn">MaxDifB</span>(X, i + 1, b)</span>'
+     + '<span class="ln">  <span class="kw">return</span> ( <span class="fnn">min</span>(minl, minr),</span>'
+     + '<span class="ln">           <span class="fnn">max</span>(maxl, maxr),</span>'
+     + '<span class="ln">           <span class="fnn">max</span>(maxr − minl, difl, difr) )</span></pre>',
+    gab: [
+      '<strong>MaxDifA</strong> executa em $Θ(n^2)$, pois seu custo de execução é dado pela '
+      + 'somatória dupla'
+      + '$$\\S{i=1}{n−1}\\S{j=i+1}{n} 1 = \\S{i=1}{n−1}(n − i) = n(n − 1) − \\S{i=1}{n−1} i$$',
+      'Resolvendo a somatória aritmética:'
+      + '$$= n(n − 1) − \\f{n(n − 1)}{2} = \\f{n(n − 1)}{2} = Θ(n^2)$$',
+      '<strong>MaxDifB</strong> pode ser obtida através de recorrência. Pelo seu '
+      + 'pseudocódigo, deduz-se que são duas chamadas em metades e trabalho constante na '
+      + 'combinação:'
+      + '$$T(n) = 2T(n/2) + 1$$'
+      + 'o que leva a $$T(n) = Θ(n)$$'
+      + 'resultado que pode ser obtido aplicando o <strong>Teorema Mestre</strong> '
+      + '($a = 2$, $b = 2$, $f(n) = 1$, Caso 1).',
+      '<strong>Por que a tripla é o truque.</strong> Se a recursão devolvesse só a maior '
+      + 'diferença, a combinação não teria como avaliar o caso que cruza a fronteira e '
+      + 'precisaria varrer as metades — custo $Θ(n)$ por nível, levando a $Θ(n log n)$. '
+      + 'Devolvendo também o mínimo e o máximo, o caso cruzado sai de '
+      + '$maxr − minl$ em $Θ(1)$.',
+      '<div class="callout tip"><span class="tag">Já caiu duas vezes</span>'
+      + '<p>Este mesmo problema é a <strong>Q6 de 2026.1</strong> (ponto extra), ali pedindo '
+      + 'que você <em>projete</em> a solução em vez de analisá-la. É o problema mais '
+      + 'repetido do acervo — vale saber de cor.</p></div>'
+    ] },
+
+  {id: 'S4Q4', n: 4, pts: 3, tema: 'Projetar D&C: elemento majoritário',
+    e: '<p>Uma pesquisa de opinião foi realizada para se determinar se havia uma posição '
+     + '<strong>majoritária</strong> favorável a uma proposta entre várias que foram '
+     + 'enunciadas. Os $n$ votos colhidos foram armazenados num vetor $X$.</p>'
+     + '<p><strong>Sem usar ordenação</strong>, mas usando divisão e conquista, desenvolva um '
+     + 'algoritmo para determinar qual das propostas é a majoritária. Se não há proposta '
+     + 'majoritária, seu algoritmo deve retornar "Não há posição majoritária". Sua solução '
+     + 'não deve executar em tempo maior que $O(n log n)$.</p>'
+     + '<p><em>Dica: se há proposta majoritária em $X$, ela deve ser majoritária em ao menos '
+     + 'uma das metades de $X$.</em></p>',
+    gab: [
+      '<strong>A ideia.</strong> O vetor $X$ contendo os votos é particionado em dois. Se '
+      + 'houver proposta majoritária em ambas as partições e elas forem iguais, então esta é '
+      + 'a proposta majoritária de $X$.',
+      '<strong>O caso que exige trabalho.</strong> Caso contrário, pode ocorrer que a proposta '
+      + 'majoritária de <em>uma</em> das partições seja majoritária em $X$. Para verificar se '
+      + 'isto é verdade, <strong>conta-se as suas ocorrências em $X$</strong>, o que leva a um '
+      + 'custo linear para esta verificação.',
+      '<strong>Por que a dica fecha o algoritmo.</strong> Se um valor aparece mais de $n/2$ '
+      + 'vezes em $X$, ele tem de aparecer mais da metade das vezes em pelo menos uma das '
+      + 'metades — senão somaria no máximo $n/2$. Logo bastam <strong>dois candidatos</strong> '
+      + 'a testar, e não todos os valores distintos.',
+      'A recorrência que expressa este comportamento é'
+      + '$$T(n) = 2T(n/2) + n$$'
+      + 'o que implica, pelo Teorema Mestre (Caso 2), que $$T(n) = Θ(n log n)$$',
+      '<strong>Pseudocódigo do gabarito.</strong>'
+      + '<pre class="pseudo"><span class="ln"><span class="kw">Function</span> <span class="fnn">Maj</span>(X, a, b)</span>'
+      + '<span class="ln">  <span class="kw">if</span> a = b <span class="kw">then return</span> X[a]</span>'
+      + '<span class="ln">  i ← ⌊(a+b)/2⌋</span>'
+      + '<span class="ln">  l ← <span class="fnn">Maj</span>(X, a, i)</span>'
+      + '<span class="ln">  r ← <span class="fnn">Maj</span>(X, i + 1, b)</span>'
+      + '<span class="ln">  <span class="kw">if</span> l = r <span class="kw">then return</span> l</span>'
+      + '<span class="ln">  cl ← 0; cr ← 0</span>'
+      + '<span class="ln">  <span class="kw">for</span> i ← a, a + 1, …, b <span class="kw">do</span></span>'
+      + '<span class="ln">    <span class="kw">if</span> l = X[i] <span class="kw">then</span> cl ← cl + 1</span>'
+      + '<span class="ln">    <span class="kw">if</span> r = X[i] <span class="kw">then</span> cr ← cr + 1</span>'
+      + '<span class="ln">  <span class="kw">if</span> cl &gt; (b − a + 1)/2 <span class="kw">then return</span> l</span>'
+      + '<span class="ln">  <span class="kw">if</span> cr &gt; (b − a + 1)/2 <span class="kw">then return</span> r</span>'
+      + '<span class="ln">  <span class="kw">return</span> "Não há posição majoritária"</span></pre>',
+      '<div class="callout tip"><span class="tag">Padrão nomeado</span>'
+      + '<p><strong>Contar para validar um candidato.</strong> A recursão não resolve o '
+      + 'problema — ela só produz <em>candidatos</em>. A validação é uma varredura linear. '
+      + 'Reconhecer esta forma vale ponto em qualquer questão de projeto.</p></div>'
+    ] }
+  ]
+},
+
+/* ═════════════════════════════════════ SIMULADO 5 — a prova de 2025.1 ═════ */
+{
+  id: 'S5',
+  nome: 'Prova 1 de 2025.1',
+  origem: 'Avaliação 1 · 15/05/2025 · Prof. George Lima',
+  oficial: true,
+  minutos: 100,
+  resumo: 'Cinco questões, sendo a última opcional (1,5 pt). O enunciado avisa que no máximo '
+        + '10 pts serão contabilizados — a Q5 serve para recuperar pontos perdidos, não para '
+        + 'passar de 10. É a prova com mais análise de pseudocódigo das três.',
+  observacoes: '<strong>(a)</strong> Limites assintóticos devem ser fornecidos em notação $Θ$. '
+             + '<strong>(b)</strong> $⌊x⌋$ fornece o maior inteiro menor ou igual a $x$. '
+             + '<strong>(c)</strong> $\\S{i=1}{n} 1/i ≈ ln n$. '
+             + '<strong>(d)</strong> Para $x$ e $k ≠ 0$ inteiros, a operação $x mod k$ fornece '
+             + 'o resto da divisão inteira de $x$ por $k$. '
+             + '<strong>(e)</strong> Assuma que $T(1) = T(0) = 1$ e que cada instrução de um '
+             + 'algoritmo executa em $Θ(1)$. '
+             + '<strong>(f)</strong> No máximo 10 pts estarão associados a esta avaliação.',
+  questoes: [
+
+  {id: 'S5Q1', n: 1, pts: 2, tema: 'Recorrências',
+    e: '<p>Encontre os limites assintóticos para:</p>'
+     + '<p>(a) $T(n) = 2T(n/4) + \\r{n}$<br>'
+     + '(b) $T(n) = n + \\S{i=1}{n−1} T(i)$</p>',
+    gab: [
+      '<strong>(a)</strong> Com $a = 2$, $b = 4$ e $f(n) = \\r{n}$, temos'
+      + '$$n^{log_b a} = n^{log_4 2} = n^{1/2} = \\r{n}$$'
+      + 'Como $\\r{n} = Θ\\p{n^{log_4 2}}$, aplicamos o <strong>Caso 2</strong> do Teorema '
+      + 'Mestre. Logo $$T(n) = Θ(\\r{n} log n)$$',
+      '<strong>(b)</strong> Esta recorrência tem <strong>histórico</strong> — o termo '
+      + '$n$-ésimo depende de <em>todos</em> os anteriores, então o Teorema Mestre não se '
+      + 'aplica. A saída é o método da <strong>remoção de histórico</strong>: escrever também '
+      + 'a recorrência para $n − 1$ e subtrair.',
+      'Desenvolvendo a expressão $T(n) − T(n−1)$:'
+      + '$$T(n) − T(n−1) = n − (n−1) + \\S{i=1}{n−1} T(i) − \\S{i=1}{n−2} T(i)$$'
+      + 'As somatórias diferem por um único termo, $T(n−1)$, e $n − (n−1) = 1$:'
+      + '$$T(n) − T(n−1) = T(n−1) + 1$$',
+      'Isolando $T(n)$, chegamos a uma recorrência subtrativa limpa:'
+      + '$$T(n) = 2T(n−1) + 1$$'
+      + 'Usando o método da árvore, que tem altura $n$ e custo unitário por nó, obtém-se'
+      + '$$T(n) = \\S{i=1}{n} 2^{i−1} = Θ(2^n)$$',
+      '<div class="callout exam"><span class="tag">Na prova</span>'
+      + '<p>Recorrência subtrativa que explode em $Θ(2^n)$ caiu nas <strong>três</strong> '
+      + 'provas: aqui, na Q2(B) de 2025.2 e na Q1(d) de 2026.1. Se você só decorar um '
+      + 'resultado da matéria de recorrências, decore este.</p></div>'
+    ] },
+
+  {id: 'S5Q2', n: 2, pts: 2, tema: 'Laços aninhados',
+    e: '<p>Forneça a complexidade para o tempo de execução do algoritmo a seguir, que recebe '
+     + 'um valor inteiro positivo $n$ como entrada (linha 1).</p>'
+     + '<pre class="pseudo"><span class="ln"><span class="hd">1</span> i ← n</span>'
+     + '<span class="ln"><span class="hd">2</span> <span class="kw">while</span> i &gt; 0 <span class="kw">do</span></span>'
+     + '<span class="ln"><span class="hd">3</span>   j ← 1</span>'
+     + '<span class="ln"><span class="hd">4</span>   <span class="kw">while</span> j &lt; n <span class="kw">do</span></span>'
+     + '<span class="ln"><span class="hd">5</span>     k ← 0</span>'
+     + '<span class="ln"><span class="hd">6</span>     <span class="kw">while</span> k &lt; n <span class="kw">do</span></span>'
+     + '<span class="ln"><span class="hd">7</span>       k ← k + 2</span>'
+     + '<span class="ln"><span class="hd">8</span>     j ← j × 2</span>'
+     + '<span class="ln"><span class="hd">9</span>   i ← ⌊i/2⌋</span></pre>',
+    gab: [
+      '<strong>Laço externo (linhas 2 e 9).</strong> $i$ parte de $n$ e é '
+      + '<em>dividido por 2</em> a cada volta, até chegar a 0. São $⌈log_2 n⌉$ iterações.',
+      '<strong>Laço intermediário (linhas 4 e 8).</strong> $j$ parte de 1 e é '
+      + '<em>multiplicado por 2</em> até atingir $n$. São também $⌈log_2 n⌉$ iterações — e '
+      + 'note que esse número <strong>não depende de $i$</strong>, porque $j$ é reinicializado '
+      + 'em 1 na linha 3.',
+      '<strong>Laço interno (linhas 6 e 7).</strong> $k$ parte de 0 e <em>soma 2</em> até '
+      + 'atingir $n$: executa entre $n/2$ e $⌈n/2⌉$ vezes, ou seja $Θ(n)$.',
+      'Os três laços são independentes entre si, então o total é o produto:'
+      + '$$T(n) = ⌈log_2 n⌉ × ⌈log_2 n⌉ × \\f{n}{2} = Θ(n log^2 n)$$',
+      '<div class="callout warn"><span class="tag">A pegadinha</span>'
+      + '<p>O laço interno soma 2 em vez de 1 — e isso <strong>não</strong> muda a ordem: '
+      + '$n/2 = Θ(n)$. O que muda a ordem é a operação <em>multiplicativa</em> '
+      + '($j × 2$, $i/2$), que troca $n$ por $log n$. Reconhecer qual das duas é cada laço é '
+      + 'a questão inteira.</p></div>'
+    ] },
+
+  {id: 'S5Q3', n: 3, pts: 3, tema: 'Analisar pseudocódigo: melhor e pior caso',
+    e: '<p>Considere a função $F$ a seguir, desenvolvida segundo a técnica de divisão e '
+     + 'conquista. Ela recebe um vetor de inteiros em <strong>ordem não-decrescente</strong> '
+     + '$V$ com $n = b − a + 1$ elementos e um inteiro $k$.</p>'
+     + '<pre class="pseudo"><span class="ln"><span class="hd">1</span> <span class="kw">Function</span> <span class="fnn">F</span>(V, k, a, b):</span>'
+     + '<span class="ln"><span class="hd">2</span> <span class="kw">if</span> a &gt; b <span class="kw">then return</span> 0</span>'
+     + '<span class="ln"><span class="hd">3</span>   i ← ⌊(a+b)/2⌋</span>'
+     + '<span class="ln"><span class="hd">4</span> <span class="kw">if</span> V[i] &lt; k <span class="kw">then</span></span>'
+     + '<span class="ln"><span class="hd">5</span>   <span class="kw">return</span> <span class="fnn">F</span>(V, k, i + 1, b)</span>'
+     + '<span class="ln"><span class="hd">6</span> <span class="kw">if</span> V[i] &gt; k <span class="kw">then</span></span>'
+     + '<span class="ln"><span class="hd">7</span>   <span class="kw">return</span> <span class="fnn">F</span>(V, k, a, i − 1)</span>'
+     + '<span class="ln"><span class="hd">8</span> <span class="kw">return</span></span>'
+     + '<span class="ln">     1 + <span class="fnn">F</span>(V, k, a, i − 1) + <span class="fnn">F</span>(V, k, i + 1, b)</span></pre>'
+     + '<p>Após analisar o pseudocódigo, responda:</p>'
+     + '<p>(a) O que a função $F$ faz e retorna como saída para um dado vetor $V$? '
+     + 'Exemplifique.<br>'
+     + '(b) Caracterize o <strong>melhor caso</strong> para o tempo de execução de $F$, '
+     + 'determine a recorrência correspondente e forneça a complexidade associada.<br>'
+     + '(c) Caracterize o <strong>pior caso</strong> para o tempo de execução de $F$, '
+     + 'determine a recorrência correspondente e forneça a complexidade associada.</p>',
+    gab: [
+      '<strong>(a)</strong> A função $F$ <strong>conta o número de vezes que $k$ ocorre em '
+      + '$V$</strong>.',
+      '<strong>Exemplo.</strong> Para $V = [1, 2, 3, 3, 5, 7]$ e $k = 3$, o valor retornado '
+      + 'será 2. Para qualquer outro valor presente em $V$, a função retornará 1. Se '
+      + '$k ∉ V$, a função retorna 0.',
+      '<strong>Como ela funciona.</strong> As linhas 4–7 são uma busca binária comum: se o '
+      + 'elemento do meio é menor que $k$, só a metade direita interessa; se é maior, só a '
+      + 'esquerda. A linha 8 é o caso $V[i] = k$: conta essa ocorrência e '
+      + '<strong>recursa nas duas metades</strong>, porque a ordenação garante que as outras '
+      + 'cópias de $k$ são vizinhas.',
+      '<strong>(b) Melhor caso.</strong> Ocorre quando todos os valores de $V$ são distintos '
+      + 'de $k$, pois a <strong>linha 8 nunca será executada</strong> — há sempre uma única '
+      + 'chamada recursiva, sobre metade do intervalo. Neste caso'
+      + '$$T(n) = T(n/2) + 1 \\qquad T(n) = Θ(log n)$$',
+      '<strong>(c) Pior caso.</strong> Ocorre quando a linha 8 executa sempre, até que '
+      + '$b < a$ — o que leva a <strong>duas</strong> chamadas recursivas em cada metade:'
+      + '$$T(n) = 2T(n/2) + 1$$'
+      + 'Neste caso, pelo Teorema Mestre (Caso 1, pois $n^{log_2 2} = n > 1 = f(n)$), '
+      + '$$T(n) = Θ(n)$$'
+      + 'Isto pode ocorrer quando $k = V[i]$ para todo $i$ entre 1 e $n$ — isto é, quando o '
+      + 'vetor inteiro é composto por cópias de $k$.',
+      '<div class="callout tip"><span class="tag">O que dá a nota</span>'
+      + '<p>Perceba que melhor e pior caso aqui não diferem no <em>tamanho</em> dos '
+      + 'subproblemas (sempre $n/2$), e sim no <strong>número</strong> deles: 1 contra 2. É '
+      + 'essa única diferença que separa $Θ(log n)$ de $Θ(n)$.</p></div>'
+    ] },
+
+  {id: 'S5Q4', n: 4, pts: 3, tema: 'Projetar D&C: potenciação modular',
+    e: '<p>Se $x$, $y$ e $k > 0$ são números inteiros, então</p>'
+     + '$$(xy) mod k = [(x mod k)(y mod k)] mod k$$'
+     + '<p>Usando este fato, desenvolva uma função $pm(x, n, k)$ que calcula '
+     + '$x^n mod k$, sendo $x$, $n$ e $k$ inteiros positivos.</p>'
+     + '<p>O tempo de execução de sua função deve ser $Θ(log n)$, fato que você deve '
+     + '<strong>mostrar através da recorrência</strong> a ela associada.</p>',
+    gab: [
+      '<strong>De onde vem a solução.</strong> Este problema é muito similar ao cálculo da '
+      + '$n$-ésima potência de um número, visto em sala. A identidade dada é o que permite '
+      + 'aplicar o $mod$ <em>durante</em> a recursão, em vez de calcular $x^n$ inteiro (que '
+      + 'estouraria) e só depois tirar o resto.',
+      '<strong>A decomposição.</strong> A cada chamada, o tamanho do problema se reduz pela '
+      + 'metade (aproximadamente), separando os casos par e ímpar:'
+      + '$$x^n = \\c{\\p{x^{n/2}}^2}{se n é par}{x · \\p{x^{(n−1)/2}}^2}{se n é ímpar}$$',
+      '<strong>Pseudocódigo do gabarito.</strong>'
+      + '<pre class="pseudo"><span class="ln"><span class="hd">1</span> <span class="kw">Function</span> <span class="fnn">pm</span>(x, n, k):</span>'
+      + '<span class="ln"><span class="hd">2</span> <span class="kw">if</span> k = 1 <span class="kw">then return</span> 0</span>'
+      + '<span class="ln"><span class="hd">3</span> <span class="kw">if</span> n = 0 <span class="kw">then return</span> 1</span>'
+      + '<span class="ln"><span class="hd">4</span> <span class="kw">if</span> n <span class="kw">mod</span> 2 = 1 <span class="kw">then</span></span>'
+      + '<span class="ln"><span class="hd">5</span>   r ← <span class="fnn">pm</span>(x, (n − 1)/2, k)</span>'
+      + '<span class="ln"><span class="hd">6</span>   s ← x <span class="kw">mod</span> k</span>'
+      + '<span class="ln"><span class="hd">7</span> <span class="kw">else</span></span>'
+      + '<span class="ln"><span class="hd">8</span>   r ← <span class="fnn">pm</span>(x, n/2, k)</span>'
+      + '<span class="ln"><span class="hd">9</span>   s ← 1</span>'
+      + '<span class="ln"><span class="hd">10</span> <span class="kw">return</span> (r² × s) <span class="kw">mod</span> k</span></pre>',
+      '<strong>A recorrência — é isso que a questão cobra.</strong> Há uma única chamada '
+      + 'recursiva, sobre metade do expoente, e o trabalho local (uma multiplicação, um '
+      + 'resto) é constante:'
+      + '$$T(n) = T(n/2) + 1$$'
+      + 'Pelo Teorema Mestre ($a = 1$, $b = 2$, $n^{log_2 1} = n^0 = 1 = f(n)$ — Caso 2): '
+      + '$$T(n) = Θ(log n)$$',
+      '<div class="callout warn"><span class="tag">Dois detalhes do gabarito</span>'
+      + '<p><strong>1.</strong> A recorrência é em $n$, o <em>expoente</em> — não no número '
+      + 'de bits nem em $x$. É o expoente que cai pela metade.</p>'
+      + '<p><strong>2.</strong> A linha 2 trata $k = 1$ devolvendo 0, porque qualquer inteiro '
+      + 'módulo 1 é 0. É um caso base que o enunciado não pede, mas o gabarito inclui.</p></div>'
+    ] },
+
+  {id: 'S5Q5', n: 5, pts: 1.5, extra: true, tema: 'D&C: maior soma de subsequência',
+    e: '<p><strong>(Opcional)</strong> Seja $X$ uma sequência numérica contendo $n$ '
+     + 'elementos. Usando divisão e conquista, encontre a maior soma dos elementos contidos '
+     + 'em sub-sequências de $X$. Mais especificamente, sua solução deve fornecer o valor de</p>'
+     + '$$max_{1 ≤ i ≤ j ≤ n} (X[i] + X[i+1] + … + X[j])$$'
+     + '<p>Ex.: $X = [1, 2, −1, 4]$, resposta 6, pois $X[1]+X[2]+X[3]+X[4] = 6$. '
+     + '$X = [−5, 2, −1, 4, −3]$, resposta 5, pois $X[2]+X[3]+X[4] = 5$.</p>'
+     + '<p>Forneça a complexidade associada ao tempo de execução de sua solução.</p>',
+    gab: [
+      '<strong>Os três casos.</strong> Particionando $X$ em duas sub-sequências, '
+      + '$L = X[1], …, X[i]$ e $R = X[i+1], …, X[n]$, há três possibilidades: a maior soma '
+      + 'está inteiramente em $L$, inteiramente em $R$, ou <strong>cruza</strong> a fronteira.',
+      '<strong>O caso que cruza.</strong> Um subvetor que cruza é um <em>sufixo</em> de $L$ '
+      + 'seguido de um <em>prefixo</em> de $R$. Com $i$ escolhido no meio, calcula-se o melhor '
+      + 'sufixo varrendo de $i$ para trás e o melhor prefixo varrendo de $i+1$ para frente — '
+      + 'duas varreduras lineares.',
+      'A recorrência associada é'
+      + '$$T(n) = 2T(n/2) + Θ(n)$$'
+      + 'e portanto, pelo Teorema Mestre (Caso 2), o tempo de execução é '
+      + '$$T(n) = Θ(n log n)$$',
+      '<strong>Pseudocódigo do gabarito.</strong>'
+      + '<pre class="pseudo"><span class="ln"><span class="hd">1</span> <span class="kw">Function</span> <span class="fnn">maxSomaSeq</span>(X, a, b):</span>'
+      + '<span class="ln"><span class="hd">2</span> <span class="kw">if</span> a = b <span class="kw">then return</span> X[a]</span>'
+      + '<span class="ln"><span class="hd">3</span>   i ← ⌊(a+b)/2⌋</span>'
+      + '<span class="ln"><span class="hd">4</span> l ← <span class="fnn">maxSomaSeq</span>(X, a, i)</span>'
+      + '<span class="ln"><span class="hd">5</span> r ← <span class="fnn">maxSomaSeq</span>(X, i + 1, b)</span>'
+      + '<span class="ln">   <span class="cm">/* maior soma de sufixo à esquerda */</span></span>'
+      + '<span class="ln"><span class="hd">6</span> ml ← X[i]</span>'
+      + '<span class="ln"><span class="hd">7</span> t ← 0</span>'
+      + '<span class="ln"><span class="hd">8</span> <span class="kw">for</span> k ← i, i − 1, …, a <span class="kw">do</span></span>'
+      + '<span class="ln"><span class="hd">9</span>   t ← t + X[k]</span>'
+      + '<span class="ln"><span class="hd">10</span>   <span class="kw">if</span> t &gt; ml <span class="kw">then</span> ml ← t</span>'
+      + '<span class="ln">   <span class="cm">/* maior soma de prefixo à direita */</span></span>'
+      + '<span class="ln"><span class="hd">11</span> mr ← X[i + 1]</span>'
+      + '<span class="ln"><span class="hd">12</span> t ← 0</span>'
+      + '<span class="ln"><span class="hd">13</span> <span class="kw">for</span> k ← i + 1, i + 2, …, b <span class="kw">do</span></span>'
+      + '<span class="ln"><span class="hd">14</span>   t ← t + X[k]</span>'
+      + '<span class="ln"><span class="hd">15</span>   <span class="kw">if</span> t &gt; mr <span class="kw">then</span> mr ← t</span>'
+      + '<span class="ln"><span class="hd">16</span> <span class="kw">return</span> <span class="fnn">max</span>(l, r, ml + mr)</span></pre>'
+      + '<p class="xs muted">Nota: o PDF do gabarito traz a linha 11 como $mr ← i + 1$, o que '
+      + 'é erro de digitação — inicializar o acumulador com um <em>índice</em> em vez de um '
+      + 'valor quebraria a conta. A leitura correta é $mr ← X[i+1]$, como está acima, por '
+      + 'simetria com a linha 6.</p>',
+      '<div class="callout tip"><span class="tag">Dá para fazer melhor</span>'
+      + '<p>O gabarito aceita $Θ(n log n)$, mas este problema tem solução em '
+      + '<strong>$Θ(n)$</strong> pelo padrão de <em>retorno enriquecido</em>: cada chamada '
+      + 'devolve a quádrupla $(tot, pre, suf, melhor)$ e a combinação custa $Θ(1)$. É '
+      + 'exatamente o que a Q6 do <strong>Simulado autoral A</strong> treina. Na prova, '
+      + 'entregue a de '
+      + '$Θ(n log n)$ primeiro — ela já vale o ponto — e mencione a de $Θ(n)$ se sobrar '
+      + 'tempo.</p></div>'
+    ] }
+  ]
+},
+
 /* ═════════════════════════════════════════════ SIMULADO 2 — autoral ═══════ */
 {
   id: 'S2',
-  nome: 'Simulado 2',
+  nome: 'Simulado autoral A',
   origem: 'Autoral · mesma estrutura e distribuição de pontos da prova de 2026.1',
   oficial: false,
   minutos: 100,
-  resumo: 'Mesmo molde, parâmetros trocados. Faça depois de revisar os erros do Simulado 1.',
+  resumo: 'Mesmo molde de 2026.1, parâmetros trocados. Faça depois das três provas reais.',
   observacoes: '<strong>(a)</strong> Limites assintóticos em notação $Θ$. '
              + '<strong>(b)</strong> $⌊x⌋$ é o maior inteiro menor ou igual a $x$. '
              + '<strong>(c)</strong> Assuma $T(1) = T(0) = Θ(1)$ e cada instrução em $Θ(1)$.',
@@ -274,20 +689,21 @@ window.SIMULADOS = [
       '<strong>Invariante:</strong> “No início da iteração $i$ do laço <code>for</code>, a '
       + 'variável $c$ contém a quantidade de elementos estritamente positivos em '
       + '$A[1 … i−1]$.”',
-      'Formalmente: $c = |\\{\\, k : 1 ≤ k ≤ i−1 \\t{ e } A[k] > 0 \\,\\}|$.',
+      'Formalmente: $c$ é a cardinalidade do conjunto dos índices $k$ com '
+      + '$1 ≤ k ≤ i−1$ e $A[k] > 0$.',
       '<strong>Inicialização.</strong> Antes da primeira iteração, $i = 1$ e $c = 0$. '
       + 'O invariante afirma que $c$ é a quantidade de positivos em $A[1 … 0]$ — uma sequência '
       + 'vazia, que tem zero elementos positivos. Verdadeiro.',
       '<strong>Manutenção.</strong> Suponha o invariante válido no início da iteração $i$, isto '
-      + 'é, $c = |\\{k ≤ i−1 : A[k] > 0\\}|$. O corpo do laço examina $A[i]$ e há dois casos:'
+      + 'é, $c = |{k ≤ i−1 : A[k] > 0}|$. O corpo do laço examina $A[i]$ e há dois casos:'
       + '<br>· Se $A[i] > 0$, o algoritmo faz $c ← c + 1$, e o novo valor é a contagem em '
       + '$A[1..i−1]$ mais um — exatamente a contagem em $A[1..i]$.'
       + '<br>· Se $A[i] ≤ 0$, o algoritmo não altera $c$, e a contagem em $A[1..i]$ é igual à '
       + 'de $A[1..i−1]$ — também correto.'
       + '<br>Nos dois casos, ao entrar na iteração $i+1$ vale '
-      + '$c = |\\{k ≤ i : A[k] > 0\\}|$, que é o invariante com $i$ trocado por $i+1$. Mantido.',
+      + '$c = |{k ≤ i : A[k] > 0}|$, que é o invariante com $i$ trocado por $i+1$. Mantido.',
       '<strong>Término.</strong> O laço encerra quando $i = n+1$. Substituindo no invariante, '
-      + '$c = |\\{k ≤ n : A[k] > 0\\}|$ — a quantidade de elementos estritamente positivos em '
+      + '$c = |{k ≤ n : A[k] > 0}|$ — a quantidade de elementos estritamente positivos em '
       + 'todo o vetor. É esse valor que o algoritmo retorna, logo ele está correto. ∎',
       '<strong>Complexidade:</strong> o laço executa $n$ vezes com corpo $Θ(1)$, logo '
       + '$T(n) = Θ(n)$.'
@@ -391,9 +807,9 @@ window.SIMULADOS = [
       + 'valores das metades, o que mantém a invariante da recursão.',
       '<strong>As fórmulas de combinação.</strong>'
       + '$$tot = tot_E + tot_D$$'
-      + '$$pre = max\\p{pre_E,\\; tot_E + pre_D}$$'
-      + '$$suf = max\\p{suf_D,\\; tot_D + suf_E}$$'
-      + '$$melhor = max\\p{melhor_E,\\; melhor_D,\\; suf_E + pre_D}$$',
+      + '$$pre = max\\p{pre_E, tot_E + pre_D}$$'
+      + '$$suf = max\\p{suf_D, tot_D + suf_E}$$'
+      + '$$melhor = max\\p{melhor_E, melhor_D, suf_E + pre_D}$$',
       '<strong>Algoritmo.</strong>'
       + '<pre class="pseudo"><span class="ln"><span class="kw">Function</span> <span class="fnn">MaxSub</span>(A, a, b):</span>'
       + '<span class="ln">  <span class="kw">if</span> a = b <span class="kw">then</span></span>'
@@ -425,7 +841,7 @@ window.SIMULADOS = [
 /* ═════════════════════════════════════════════ SIMULADO 3 — autoral ═══════ */
 {
   id: 'S3',
-  nome: 'Simulado 3',
+  nome: 'Simulado autoral B',
   origem: 'Autoral · itens mais difíceis, para calibrar o topo da nota',
   oficial: false,
   minutos: 100,
@@ -632,7 +1048,7 @@ window.SIMULADOS = [
       + 'elementos, ou seja, <strong>reduz $k$ à metade</strong>, com trabalho local $Θ(1)$:'
       + '$$T(k) = T(k/2) + Θ(1) ⇒ T(k) = Θ(log k)$$',
       '<strong>Fechando o limite pedido.</strong> Como $k ≤ n + m$,'
-      + '$$T = O\\p{log(n+m)} = O\\p{log(2·max(m,n))} = O\\p{log\\,max(m,n)} = O(log m + log n)$$'
+      + '$$T = O\\p{log(n+m)} = O\\p{log(2·max(m,n))} = O\\p{log max(m,n)} = O(log m + log n)$$'
       + 'usando $log(n+m) ≤ log(2 max(m,n)) = 1 + log max(m,n)$ e '
       + '$log max(m,n) ≤ log m + log n$ para $m, n ≥ 2$. ✓',
       '<strong>Por que não basta uma busca binária simples.</strong> Buscar em $X$ e em $Y$ '

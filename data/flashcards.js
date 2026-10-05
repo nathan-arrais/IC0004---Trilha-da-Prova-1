@@ -2,22 +2,29 @@
    flashcards.js — 5 decks para repetição espaçada.
    Formato: { id, deck, f: frente, v: verso, tag? }
    Matemática em $…$ / $$…$$, processada por AG.tex().
+
+   Numeração dos ids por bloco de deck:
+     D0 c001+ · D1 c101+ · D2 c201+ · D3 c301+ · D4 c401+
+   Os cartões c411–c422 vieram da comparação das três Avaliação 1
+   (2025.1, 2025.2, 2026.1) — alguns moram em D2/D3 por assunto.
    ========================================================================== */
 
 window.DECKS = [
   { id: 'D0', nome: 'Pré-requisitos',      cor: 'gold',
     desc: 'Logaritmos, somatórios, fatoriais. Não é "conteúdo da prova" — é o que faz você '
         + 'errar no meio de uma questão que sabia.' },
-  { id: 'D1', nome: 'Conceitos e assintótica', cor: 'accent',
-    desc: 'Definições de O, Ω e Θ, invariantes, modelo RAM. Base da questão 3.' },
-  { id: 'D2', nome: 'Recorrências',        cor: 'ok',
+  {id: 'D1', nome: 'Conceitos e assintótica', cor: 'accent',
+    desc: 'Definições de O, Ω e Θ, invariantes, modelo RAM. Base da questão de invariante de '
+        + 'laço e da questão conceitual de assintótica.' },
+  {id: 'D2', nome: 'Recorrências', cor: 'ok',
     desc: 'Teorema Mestre, substituição, árvore, remoção de histórico, e as recorrências '
-        + 'canônicas de reconhecimento imediato. Base da questão 1.' },
-  { id: 'D3', nome: 'Divisão e conquista', cor: 'warn',
+        + 'canônicas de reconhecimento imediato. A questão de recorrências caiu em 3 de 3 provas.' },
+  {id: 'D3', nome: 'Divisão e conquista', cor: 'warn',
     desc: 'Cada algoritmo clássico: recorrência, complexidade e a ideia que o faz funcionar. '
-        + 'Base das questões 4, 5 e 6.' },
-  { id: 'D4', nome: 'Padrões de prova',    cor: 'bad',
-    desc: 'Os seis tipos de questão e o roteiro de resposta de cada um. Revise na véspera.' }
+        + 'Ler e projetar D&C somam metade da nota — e caíram em 3 de 3 provas.' },
+  {id: 'D4', nome: 'Padrões de prova', cor: 'bad',
+    desc: 'O roteiro de resposta de cada tipo de questão, o que caiu em quantas das três '
+        + 'provas, e toda recorrência já cobrada. Revise na véspera.' }
 ];
 
 window.FLASHCARDS = [
@@ -733,7 +740,7 @@ window.FLASHCARDS = [
    + '<p><strong>3.</strong> Esquecer a condição de regularidade no caso 3.</p>'
    + '<p><strong>4.</strong> Enunciar o invariante sem o <strong>término</strong>.</p>'
    + '<p><strong>5.</strong> Dar a complexidade sem exibir a <strong>recorrência</strong> — '
-   + 'as questões 4, 5 e 6 pedem explicitamente.</p>' },
+   + 'todas as questões de D&C das três provas pedem explicitamente.</p>' },
 
 { id: 'c409', deck: 'D4', tag: 'erro',
   f: 'Laços aninhados multiplicam ou somam? E laços em sequência?',
@@ -753,6 +760,154 @@ window.FLASHCARDS = [
    + '<p><strong>Não serve</strong> se: aparece $T(n − k)$; os subproblemas têm tamanhos '
    + 'diferentes; ou $f(n)$ difere de $n^{log_b a}$ apenas por fator logarítmico.</p>'
    + '<p>Nesses casos: <strong>árvore de recursão</strong>. E se houver somatório na '
-   + 'recorrência: <strong>remoção de histórico</strong>.</p>' }
+   + 'recorrência: <strong>remoção de histórico</strong>.</p>' },
+
+/* ------------------------------------------------------------------------
+   c411+ — derivados da comparação das três provas (2025.1, 2025.2, 2026.1).
+   Tag 'freq' = o que a frequência diz; 'canonicas' = recorrências cobradas.
+   ------------------------------------------------------------------------ */
+
+{id: 'c411', deck: 'D4', tag: 'freq',
+  f: 'Dos temas da Prova 1, quais caíram nas <strong>três</strong> provas (2025.1, 2025.2, 2026.1)?',
+  v: '<p><strong>Três temas, 3/3:</strong></p>'
+   + '<p><strong>1.</strong> Resolver recorrências dadas — Teorema Mestre + árvore. '
+   + '(2025.1 Q1 · 2025.2 Q2 · 2026.1 Q1) ≈ 2,2 pts</p>'
+   + '<p><strong>2.</strong> Analisar um pseudocódigo dado: o que retorna, a recorrência, o $Θ$. '
+   + '(2025.1 Q3 · 2025.2 Q3 · 2026.1 Q4) ≈ 2,5 pts</p>'
+   + '<p><strong>3.</strong> Projetar um algoritmo de D&amp;C do zero. '
+   + '(2025.1 Q4+Q5 · 2025.2 Q4 · 2026.1 Q5+Q6) ≈ 3,5 pts</p>'
+   + '<p>Somados, <strong>cerca de 8 dos 10 pontos</strong>. Laços aninhados caiu em 2/3; '
+   + 'invariante de laço e a questão conceitual de assintótica, em 1/3 cada.</p>' },
+
+{id: 'c412', deck: 'D4', tag: 'freq',
+  f: 'Qual é o <strong>problema mais repetido</strong> do acervo de provas?',
+  v: '<p>A <strong>maior diferença</strong> $A[j] − A[i]$ com $i ≤ j$ — o "MaxDif".</p>'
+   + '<p>Caiu <strong>duas vezes</strong>, em ângulos opostos:</p>'
+   + '<p>· <strong>2025.2 Q3</strong> (2,5 pts): o pseudocódigo era dado, e você tinha de '
+   + '<em>analisar</em> — a versão iterativa é $Θ(n^2)$, a de D&amp;C é $Θ(n)$.</p>'
+   + '<p>· <strong>2026.1 Q6</strong> (1,0 pt extra): você tinha de <em>projetar</em>.</p>'
+   + '<p>Nas duas, a chave é a mesma: cada chamada devolve a tripla '
+   + '$(min, max, dif)$, e o caso que cruza sai de $max_D − min_E$ em $Θ(1)$.</p>' },
+
+{id: 'c413', deck: 'D4', tag: 'canonicas',
+  f: 'Recorrências já cobradas — <strong>as do Teorema Mestre</strong>. Resolva de cabeça: '
+     + '$4T(n/2) + n^2$ · $16T(n/4) + n$ · $2T(n/4) + \\r{n}$ · $2T(n/2) + 1$ · $T(n/2) + 1$',
+  v: '<p>$$4T(n/2) + n^2 = Θ(n^2 log n)$$ caso 2 — $n^{log_2 4} = n^2 = f(n)$. (2026.1 Q1a)</p>'
+   + '<p>$$16T(n/4) + n = Θ(n^2)$$ caso 1 — $n^{log_4 16} = n^2$ domina $f(n) = n$. (2025.2 Q2A)</p>'
+   + '<p>$$2T(n/4) + \\r{n} = Θ(\\r{n} log n)$$ caso 2 — $n^{log_4 2} = n^{1/2} = \\r{n}$. (2025.1 Q1a)</p>'
+   + '<p>$$2T(n/2) + 1 = Θ(n)$$ caso 1. (2025.2 Q3 · 2026.1 Q4 · pior caso de 2025.1 Q3)</p>'
+   + '<p>$$T(n/2) + 1 = Θ(log n)$$ caso 2 — $a = 1$, $n^{log_2 1} = 1$. (2025.1 Q4 e melhor caso de Q3)</p>' },
+
+{id: 'c414', deck: 'D4', tag: 'canonicas',
+  f: 'Recorrências já cobradas — <strong>as que o Teorema Mestre NÃO resolve</strong>. '
+     + 'Resolva: $2T(n−1) + 1$ · $2T(n−1) + n$ · $T(n−1) + log n$ · $T(n) = n + \\S{i=1}{n−1} T(i)$',
+  v: '<p>$$2T(n−1) + 1 = Θ(2^n)$$ árvore de altura $n$, $2^{i−1}$ nós no nível $i$: '
+   + '$\\S{i=1}{n} 2^{i−1} = 2^n − 1$. (2025.2 Q2B)</p>'
+   + '<p>$$2T(n−1) + n = Θ(2^n)$$ mesma árvore, nós de custo $n−i+1$. (2026.1 Q1d)</p>'
+   + '<p>$$T(n−1) + log n = Θ(n log n)$$ telescopa em $\\S{i=1}{n} log i = log(n!)$. (2025.2 Q2C)</p>'
+   + '<p>$$n + \\S{i=1}{n−1} T(i) = Θ(2^n)$$ remoção de histórico: subtraia a equação de $n−1$ '
+   + 'e caia em $2T(n−1) + 1$. (2025.1 Q1b)</p>'
+   + '<p><strong>Padrão:</strong> subtrativa com coeficiente 2 explode em $Θ(2^n)$ — caiu nas '
+   + 'três provas.</p>' },
+
+{id: 'c415', deck: 'D4', tag: 'padrao',
+  f: 'O enunciado descreve o algoritmo <strong>só em prosa</strong>, sem pseudocódigo. '
+     + 'Como traduzir para recorrência?',
+  v: '<p>Dicionário (foi a Q2 de 2025.2, 2,5 pts):</p>'
+   + '<p>· "divide em $a$ sub-problemas" → o coeficiente $a$</p>'
+   + '<p>· "com entradas $b$ vezes menores" → $T(n/b)$</p>'
+   + '<p>· "cada uma com um elemento a menos" → $T(n−1)$, <strong>subtrativa</strong></p>'
+   + '<p>· "descarta-se um elemento" → uma única chamada $T(n−1)$</p>'
+   + '<p>· "combinadas em tempo linear" → $+ Θ(n)$</p>'
+   + '<p>· "tempo de combinar é constante" → $+ Θ(1)$</p>'
+   + '<p>· "processar a entrada custa logaritmo" → $+ log n$</p>'
+   + '<p><strong>A pegadinha:</strong> "um elemento a menos" é $T(n−1)$, não $T(n/2)$ — a '
+   + 'diferença entre $Θ(2^n)$ e $Θ(n)$.</p>' },
+
+{id: 'c416', deck: 'D4', tag: 'assint',
+  f: 'Dois programas custam $f(n) = n + 5/n$ e $g(n) = 100\\r{n}$. Qual é mais rápido para '
+     + '$n ≤ 1.000$? E para $n > 10.000$?',
+  v: '<p>$f = Θ(n)$ e $g = Θ(\\r{n})$ — assintoticamente $g$ é melhor. '
+   + 'Mas a pergunta é sobre uma <strong>faixa</strong>.</p>'
+   + '<p>· $n ≤ 1.000$: $f(1000) = 1000{,}005$ contra $g(1000) ≈ 3.162$. '
+   + 'Ganha o de $Θ(n)$.</p>'
+   + '<p>· $n > 10.000$: $g(10000) = 100 × 100 = 10.000$ contra $f(10000) > 10.000$. '
+   + 'Ganha o de $Θ(\\r{n})$.</p>'
+   + '<p>O cruzamento é em $100\\r{n} = n$, ou seja $n = 10.000$.</p>'
+   + '<p><strong>A lição:</strong> a notação assintótica ignora constantes e termos de menor '
+   + 'ordem de propósito. Quando o enunciado fixa uma faixa de $n$, compare os '
+   + '<em>valores</em>. Como as funções são contínuas e crescentes, basta olhar os extremos. '
+   + '(2025.2 Q1, 2,0 pts)</p>' },
+
+{id: 'c417', deck: 'D3', tag: 'potencia',
+  f: 'Como calcular $x^n mod k$ em $Θ(log n)$?',
+  v: '<p>Pela identidade $(xy) mod k = [(x mod k)(y mod k)] mod k$, que permite reduzir '
+   + '<em>dentro</em> da recursão em vez de calcular $x^n$ inteiro (que estouraria).</p>'
+   + '<p>Mesma decomposição da potência comum:</p>'
+   + '$$x^n = \\c{\\p{x^{n/2}}^2}{se n é par}{x · \\p{x^{(n−1)/2}}^2}{se n é ímpar}$$'
+   + '<p>devolvendo $(r^2 × s) mod k$, com $s = x mod k$ no caso ímpar e $s = 1$ no par.</p>'
+   + '$$T(n) = T(n/2) + Θ(1) ⇒ Θ(log n)$$'
+   + '<p><strong>Diga explicitamente:</strong> a recorrência é no <em>expoente</em> $n$, não '
+   + 'em $x$, $k$ ou número de elementos. (2025.1 Q4, 3,0 pts)</p>' },
+
+{id: 'c418', deck: 'D2', tag: 'somas',
+  f: '$T(n) = T(n−1) + log n$. Por que não é $Θ(log n)$?',
+  v: '<p>Porque há $n$ níveis de recursão, cada um custando um logaritmo — o total é $n$ '
+   + 'logaritmos, não um.</p>'
+   + '<p>Telescopando e usando que <strong>soma de logaritmos é o logaritmo do produto</strong>:</p>'
+   + '$$T(n) = \\S{i=1}{n} log i = log\\p{\\P{i=1}{n} i} = log(n!) = Θ(n log n)$$'
+   + '<p>O mesmo raciocínio que faz $T(n−1) + Θ(1)$ dar $Θ(n)$ e não $Θ(1)$. '
+   + '(2025.2 Q2C)</p>' },
+
+{id: 'c419', deck: 'D2', tag: 'padrao',
+  f: 'Três laços aninhados: o externo faz $i ← ⌊i/2⌋$, o do meio $j ← j × 2$, e o interno '
+     + '$k ← k + 2$ até $n$. Complexidade?',
+  v: '$$Θ(n log^2 n)$$'
+   + '<p>· externo: $i$ parte de $n$ e é <strong>dividido</strong> por 2 → $⌈log_2 n⌉$ voltas</p>'
+   + '<p>· meio: $j$ parte de 1 e é <strong>multiplicado</strong> por 2 → $⌈log_2 n⌉$ voltas, '
+   + 'e <em>não depende de $i$</em>, pois $j$ é reinicializado</p>'
+   + '<p>· interno: $k$ <strong>soma</strong> 2 até $n$ → $n/2 = Θ(n)$ voltas</p>'
+   + '<p>Independentes, então multiplicam: $log n × log n × n$.</p>'
+   + '<p><strong>A regra:</strong> laço aditivo dá $Θ(n)$; laço multiplicativo dá $Θ(log n)$. '
+   + 'Somar 2 em vez de 1 não muda a ordem. (2025.1 Q2)</p>' },
+
+{id: 'c420', deck: 'D3', tag: 'projeto',
+  f: 'Elemento majoritário <strong>sem ordenar</strong>, por divisão e conquista. Ideia e complexidade?',
+  v: '<p><strong>A dica que fecha o problema:</strong> se há majoritário em $X$, ele é '
+   + 'majoritário em ao menos uma das metades — senão somaria no máximo $n/2$. Logo há no '
+   + 'máximo <strong>dois candidatos</strong>.</p>'
+   + '<p>Particione; se as duas metades devolvem o mesmo valor, é a resposta. Senão, conte as '
+   + 'ocorrências de cada candidato em $X$ — varredura linear — e devolva o que passar de '
+   + '$(b−a+1)/2$.</p>'
+   + '$$T(n) = 2T(n/2) + n ⇒ Θ(n log n)$$'
+   + '<p><strong>O padrão:</strong> a recursão só produz <em>candidatos</em>; a validação é '
+   + 'linear e separada. Existe solução $Θ(n)$ (Boyer–Moore), mas 2025.2 Q4 pediu D&amp;C com '
+   + 'teto $O(n log n)$ — entregue o que o enunciado pede.</p>' },
+
+{id: 'c421', deck: 'D3', tag: 'padrao',
+  f: 'Uma mesma função recursiva tem melhor caso $Θ(log n)$ e pior caso $Θ(n)$. O que mudou '
+     + 'entre os dois?',
+  v: '<p>O <strong>número</strong> de chamadas recursivas — não o tamanho delas.</p>'
+   + '<p><strong>Melhor caso:</strong> uma chamada.</p>'
+   + '$$T(n) = T(n/2) + 1 = Θ(log n)$$'
+   + '<p><strong>Pior caso:</strong> duas chamadas.</p>'
+   + '$$T(n) = 2T(n/2) + 1 = Θ(n)$$'
+   + '<p>Nos dois casos o subproblema é $n/2$. É só o coeficiente que muda, de 1 para 2.</p>'
+   + '<p><strong>O caso concreto (2025.1 Q3, 3,0 pts):</strong> uma função que conta '
+   + 'ocorrências de $k$ num vetor ordenado. Se $V[i] ≠ k$, desce por um lado só — busca '
+   + 'binária. Se $V[i] = k$, recursa nas <em>duas</em> metades. Melhor caso: $k ∉ V$. '
+   + 'Pior caso: $V$ inteiro é cópia de $k$.</p>' },
+
+{id: 'c422', deck: 'D4', tag: 'erro',
+  f: 'Numa questão de projeto, o que distingue uma resposta de $Θ(n)$ de uma de $Θ(n log n)$?',
+  v: '<p><strong>O custo da combinação.</strong> O número e o tamanho dos subproblemas é o '
+   + 'mesmo ($2$ de $n/2$); o que muda é $f(n)$:</p>'
+   + '$$2T(n/2) + Θ(1) = Θ(n) \\qquad 2T(n/2) + Θ(n) = Θ(n log n)$$'
+   + '<p>Derrubar a combinação para $Θ(1)$ é exatamente o que o <strong>retorno '
+   + 'enriquecido</strong> faz: devolver, além da resposta, o que a combinação precisaria '
+   + 'recalcular varrendo as metades.</p>'
+   + '<p><strong>Na prova:</strong> dizer <em>o que cada chamada devolve</em> é parte da '
+   + 'resposta, não detalhe de implementação. E explicitar '
+   + '$T(n) = aT(n/b) + f(n)$ — todas as três provas pedem a recorrência.</p>' }
 
 ];
